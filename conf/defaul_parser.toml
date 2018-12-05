@@ -1,0 +1,5 @@
+encoding_func = ""
+encoding = "utf-8"
+title = "title"
+words_tag = "p"
+next_tag = "a[rel='next']"

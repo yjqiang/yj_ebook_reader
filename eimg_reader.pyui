@@ -1,0 +1,205 @@
+[
+  {
+    "nodes" : [
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{-4, 0}, {347, 535}}",
+        "class" : "ScrollView",
+        "attributes" : {
+          "frame" : "{{0, 80}, {320, 320}}",
+          "uuid" : "F0410398-BBC2-4979-9425-4E0D8CD71948",
+          "custom_attributes" : "",
+          "content_height" : 999,
+          "class" : "ScrollView",
+          "content_width" : 281,
+          "name" : "scrollview"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{21, 543}, {89, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "image_name" : "iob:bookmark_24",
+          "frame" : "{{143, 272}, {80, 32}}",
+          "title" : "保存书签",
+          "uuid" : "A9960838-27A7-4F09-B167-0E69DEB9017C",
+          "font_bold" : true,
+          "class" : "Button",
+          "background_color" : "RGBA(0.835294,1.000000,0.835294,1.000000)",
+          "name" : "button_save_bm",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{158, 543}, {89, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "frame" : "{{143, 272}, {80, 32}}",
+          "title" : "查看书签",
+          "uuid" : "A91A032B-BDAD-4B7A-9BB5-D26EB3BC79CF",
+          "background_color" : "RGBA(0.791667,1.000000,0.851190,1.000000)",
+          "class" : "Button",
+          "name" : "button_show_bm",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 0}, {337, 70}}",
+        "class" : "ImageView",
+        "attributes" : {
+          "custom_attributes" : "{\"i\": 0}",
+          "frame" : "{{122, 245}, {100, 100}}",
+          "class" : "ImageView",
+          "name" : "imageview0",
+          "uuid" : "F96DD310-BF53-43D1-ACDB-EEB8D95D4C69"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 70}, {337, 70}}",
+        "class" : "ImageView",
+        "attributes" : {
+          "custom_attributes" : "{\"i\": 0}",
+          "frame" : "{{122, 245}, {100, 100}}",
+          "class" : "ImageView",
+          "name" : "imageview1",
+          "uuid" : "5F47ED22-944D-4C6E-AE51-30C54B77DDAD"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 140}, {337, 70}}",
+        "class" : "ImageView",
+        "attributes" : {
+          "custom_attributes" : "{\"i\": 0}",
+          "frame" : "{{122, 245}, {100, 100}}",
+          "class" : "ImageView",
+          "name" : "imageview2",
+          "uuid" : "BD05FE8E-7E4C-45B8-8C90-2F9FAF7F469D"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 210}, {337, 70}}",
+        "class" : "ImageView",
+        "attributes" : {
+          "custom_attributes" : "{\"i\": 0}",
+          "frame" : "{{122, 245}, {100, 100}}",
+          "class" : "ImageView",
+          "name" : "imageview3",
+          "uuid" : "8CBA1503-53D6-48F5-AE14-8CE76BBA4A00"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 280}, {337, 70}}",
+        "class" : "ImageView",
+        "attributes" : {
+          "custom_attributes" : "{\"i\": 0}",
+          "frame" : "{{122, 245}, {100, 100}}",
+          "class" : "ImageView",
+          "name" : "imageview4",
+          "uuid" : "44EBE85E-6711-41B2-853E-D3F332A6F0E2"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 350}, {337, 70}}",
+        "class" : "ImageView",
+        "attributes" : {
+          "custom_attributes" : "{\"i\": 0}",
+          "frame" : "{{122, 245}, {100, 100}}",
+          "class" : "ImageView",
+          "name" : "imageview5",
+          "uuid" : "DD2E7E3A-5BD3-4EF9-8D96-FAF0DF628003"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 420}, {337, 70}}",
+        "class" : "ImageView",
+        "attributes" : {
+          "custom_attributes" : "{\"i\": 0}",
+          "frame" : "{{122, 245}, {100, 100}}",
+          "class" : "ImageView",
+          "name" : "imageview6",
+          "uuid" : "3809C057-07C6-458D-8A27-4E96D6A4DCD5"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 490}, {337, 70}}",
+        "class" : "ImageView",
+        "attributes" : {
+          "custom_attributes" : "{\"i\": 0}",
+          "frame" : "{{122, 245}, {100, 100}}",
+          "class" : "ImageView",
+          "name" : "imageview7",
+          "uuid" : "43A7B8C5-E6D8-4F3F-8A9F-E98C36B0A0E4"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{0, 560}, {337, 70}}",
+        "class" : "ImageView",
+        "attributes" : {
+          "custom_attributes" : "{\"i\": 0}",
+          "frame" : "{{122, 245}, {100, 100}}",
+          "class" : "ImageView",
+          "name" : "imageview8",
+          "uuid" : "534B796D-B40C-4702-A419-28BE5662DB47"
+        },
+        "selected" : true
+      }
+    ],
+    "frame" : "{{0, 0}, {343, 590}}",
+    "class" : "View",
+    "attributes" : {
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "enabled" : true,
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "name" : "",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "flex" : ""
+    },
+    "selected" : false
+  }
+]
