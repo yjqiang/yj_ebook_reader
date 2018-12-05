@@ -2,6 +2,7 @@ from ebook_loader import EBookLoader
 import web
 import ui
 
+
 class EImgLoader(EBookLoader):
     def set_url(self, url):
         super().set_url(url)
