@@ -1,7 +1,7 @@
 import ui
 # import time
 from config_loader import ConfigLoader
-from ebook_loader import EBookLoader
+from e_loader.ebook_loader import EBookLoader
 import threading
 from queue import Queue
 import console

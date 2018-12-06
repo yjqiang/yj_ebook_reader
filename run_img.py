@@ -1,4 +1,4 @@
-from eimg_loader import EImgLoader
+from e_loader.eimg_loader import EImgLoader
 import ui
 from config_loader import ConfigLoader
 import threading
@@ -267,11 +267,11 @@ class BMTableViewer:
                 # 本页的i 相对段落数目
                 new_bookmark = {
                     'i': i - l,
-                    'j': j,
+                    'j': int(j),
                     'url': url,
                     'title': name
                 }
-                print(new_bookmark)
+                # print(new_bookmark)
                         
         is_duplicated = conf_loader.check_bookmark(new_bookmark)
         
