@@ -45,14 +45,14 @@ class EBookLoader(ELoader):
             for row in i.childGenerator():
                 if isinstance(row, element.Comment):
                     continue
-                line = row.string
+                para = row.string
 
-                if line is not None:
-                    line = line.strip()
-                    if line:
-                        if line[0] != '　':
-                            line = '　　' + line
-                        words.append(line)
+                if para is not None:
+                    para = para.strip()
+                    if para:
+                        if para[0] != '　':
+                            para = '　　' + para
+                        words.append(para)
         return words
     
     def encoding_with_captcha(self):
