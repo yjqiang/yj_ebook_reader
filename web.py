@@ -1,5 +1,4 @@
 import requests
-import sys
 
 
 def get(url, headers=None):
@@ -10,7 +9,6 @@ def get(url, headers=None):
             if rsp.status_code != 200:
                 print(rsp.status_code, url)
             else:
-                print(rsp)
                 return rsp
         except:
             pass

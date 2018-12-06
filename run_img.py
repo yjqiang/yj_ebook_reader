@@ -11,14 +11,15 @@ from itertools import islice
 
 url = 'https://e-hentai.org/s/9962198a63/1300988-2'
 # url = 'https://m.k886.net/look/name/%E8%84%AB%E5%85%89%E5%85%89%E5%B0%8F%E5%B3%B6/cid/35979/id/331785/p/7#'
-# url = 'https://m.k886.net/look/name/%E8%AA%BF%E6%95%99%E5%AE%B6%E6%94%BF%E5%A9%A6/cid/35290/id/323975/p/18'
+# url = 'https://m.k886.net/look/name/SuperDick/cid/36391/id/340777'
 # url = 'https://raws.mangazuki.co/manga/desire-king/81'
-#url = 'https://raws.mangazuki.co/manga/desire-king/48'
+# url = 'https://raws.mangazuki.co/manga/desire-king/48'
 # url = "https://raws.mangazuki.co/manga/desire-king/49"
 
 # url = 'https://e-hentai.org/s/d0c15f30ab/1300988-1'
 # url = 'http://www.177pic.info/html/2018/04/1999461.html/19'
-url = 'https://manhwahand.com/manhwa/desire-king/chapter-1/?style=list'
+url = 'https://manhwahand.com/manhwa/desire-king/chapter-30?style=list'
+# url = 'https://nhentai.net/g/249922/2/'
 
 conf_loader = ConfigLoader()
 
@@ -182,7 +183,7 @@ class Reader:
                 item_end = self.items[-1]
                 item = self.items[0]
                 if (item_end.y + item_end.height - reader_h <= offset and item_end.i is not None):
-                    console.hud_alert('应该load')
+                    # console.hud_alert('应该load')
                     i = item_end.i + 1
             
                     if i >= len(self.contents):
@@ -199,7 +200,7 @@ class Reader:
                     item.i = i
                     self.items.rotate(-1)
                 elif item_end.i is None and item_end.y <= offset + reader_h:
-                    console.hud_alert(f'应该refresh')
+                    # console.hud_alert(f'应该refresh')
                     if not self.add2contents():
                         break
                                     
@@ -254,7 +255,6 @@ class BMTableViewer:
     def save_bm(self, sender):
         scrollview = self.reader.scrollview
         off_set = scrollview.content_offset.y
-        # !!!!!!!!!
         for item in self.reader.items:
             if item.y + item.height >= off_set:
                 i = item.i
