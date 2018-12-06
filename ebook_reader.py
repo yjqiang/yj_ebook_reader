@@ -1,12 +1,11 @@
-import ui
-# import time
-from config_loader import ConfigLoader
-from e_loader.ebook_loader import EBookLoader
 import threading
 from queue import Queue
+from collections import deque
+import ui
 import console
 from ui import Image
-from collections import deque
+from config_loader import ConfigLoader
+from e_loader.ebook_loader import EBookLoader
 
 
 url = 'http://quanben-xiaoshuo.com/n/wuxiashijiedachuanyue/7.html'
@@ -37,6 +36,7 @@ dict_bm = conf_loader.dict_bookmark
 class Reader:
     ITEM_H = 32
     LEN_LINE = 19
+    LOADING = 'LOADING...'
         
     def __init__(self, scrollview, tableview):
         self.var_ebook_loader = EBookLoader(dict_conf)
@@ -54,30 +54,37 @@ class Reader:
         # print('执行')
         
     def check_title(self):
-        i = self.items[0].i
-        for l, r, name, url in self.titles:
-            if l <= i < r:
-                nav_view.name = name
+        off_set = self.cur_offset
+        for item in self.items:
+            if item.y + item.height >= off_set:
+                i = item.i
+                if i is None:
+                    continue
+                
+                for l, r, name, url in self.titles:
+                    if l <= i < r:
+                        nav_view.name = name
+                return
         
     def add2contents(self):
         if not self.queue.empty():
             chapter, title, url, init = self.queue.get()
             l = len(self.contents)
-            sum_lines = 0 if init else 1
+            sum_num_lines = 0 if init else 1
             for para in chapter:
                 len_para = len(para)
-                lines = int((len_para - 1) / self.LEN_LINE) + 1
-                sum_lines += lines
-                self.contents.append((para, lines))
+                num_lines = int((len_para - 1) / self.LEN_LINE) + 1
+                sum_num_lines += num_lines
+                self.contents.append((para, num_lines))
             
             split_contents = '—' * self.LEN_LINE
             self.contents.append((split_contents, 1))
             
             r = len(self.contents)
             self.titles.append((l, r, title, url))
-            self.scrollview.content_size += (0, sum_lines * self.ITEM_H)
+            self.scrollview.content_size += (0, sum_num_lines * self.ITEM_H)
             self.has_sent_req = False
-            return sum_lines
+            return sum_num_lines
         return None
         
     def load_chapter_bg(self):
@@ -93,10 +100,8 @@ class Reader:
         # self.queue.clear()
         self.queue = Queue()
         scrollview = self.scrollview
-        print(1, scrollview.content_offset)
         # 这里把offset归零了,并调用了函数
         scrollview.content_size = (scrollview.width, 0)
-        print(0, scrollview.content_offset)
         
         self.cur_offset = 0
             
@@ -105,11 +110,11 @@ class Reader:
         self.titles = []
         self.var_ebook_loader.set_url(url)
         self.load_chapter(True)
-        sum_lines = self.add2contents()
+        sum_num_lines = self.add2contents()
         # 其实应该仿照img模块的，我懒
-        while sum_lines <= len(self.items):
+        while sum_num_lines <= len(self.items):
             self.load_chapter()
-            sum_lines += self.add2contents()
+            sum_num_lines += self.add2contents()
         
         i_wanted = i
         j_wanted = j
@@ -125,12 +130,12 @@ class Reader:
             y += self.ITEM_H
             j += self.LEN_LINE
             
-        rows = 0
-        for para, lines in self.contents[:i_wanted]:
-            rows += lines
-        rows += int(j_wanted / self.LEN_LINE)
+        sum_num_lines = 0
+        for para, num_lines in self.contents[:i_wanted]:
+            sum_num_lines += num_lines
+        sum_num_lines += int(j_wanted / self.LEN_LINE)
         # 这个破玩意儿改了之后会自动调用监听函数
-        scrollview.content_offset = (0, rows*self.ITEM_H)
+        scrollview.content_offset = (0, sum_num_lines*self.ITEM_H)
         self.check_title()
         
     def reset_scrollbar(self):
@@ -165,7 +170,7 @@ class Reader:
                     if len(self.contents[i][0]) <= j:
                         i, j = i + 1, 0
                     if i >= len(self.contents):
-                        text = 'LOADING...'
+                        text = self.LOADING
                         self.load_chapter_bg()
                         i, j = None, None
                         
@@ -185,16 +190,13 @@ class Reader:
                     i = item.i + 1
                     j = 0
             
-                    if i < len(self.contents):
-                        text = self.contents[i][0][j: j + self.LEN_LINE]
-                        
-                        item_end.text = text
-                        item_end.y = item.y + self.ITEM_H
-                        item_end.i = i
-                        item_end.j = j
-                    # 这个防止空白页吧……会有吗？
-                    else:
-                        break
+                    # 由于一定会补足间隔行，所以这里i一定不越界
+                    text = self.contents[i][0][j: j + self.LEN_LINE]
+                    
+                    item_end.text = text
+                    item_end.y = item.y + self.ITEM_H
+                    item_end.i = i
+                    item_end.j = j
                     
                 else:
                     break

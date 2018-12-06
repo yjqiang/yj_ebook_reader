@@ -1,12 +1,12 @@
-from e_loader.eimg_loader import EImgLoader
-import ui
-from config_loader import ConfigLoader
 import threading
 from queue import Queue
+from itertools import islice
+from collections import deque
+import ui
 import console
 from ui import Image
-from collections import deque
-from itertools import islice
+from config_loader import ConfigLoader
+from e_loader.eimg_loader import EImgLoader
 
 
 url = 'https://e-hentai.org/s/9962198a63/1300988-2'
