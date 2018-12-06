@@ -1,9 +1,9 @@
-from e_loader.ebook_loader import EBookLoader
+from e_loader.e_loader import ELoader
 import web
 import ui
 
 
-class EImgLoader(EBookLoader):
+class EImgLoader(ELoader):
     def set_url(self, url):
         self.url = url
         for i in self.dict_conf['websites']:
