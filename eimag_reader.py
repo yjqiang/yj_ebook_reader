@@ -163,7 +163,7 @@ class Reader:
         reader_h = scrollview.height
         # print('t')
         
-        content_size = self.scrollview.content_size[1]
+        content_size = scrollview.content_size[1]
         # 预加载
         if content_size and content_size - self.cur_offset <= 3.5 * reader_h:
             self.load_img_bg()
@@ -247,6 +247,7 @@ class BMTableViewer:
     def save_bm(self, sender):
         scrollview = self.reader.scrollview
         off_set = scrollview.content_offset.y
+        i = None
         for item in self.reader.items:
             if item.y + item.height >= off_set:
                 i = item.i
