@@ -21,11 +21,11 @@ url = 'https://m.qu.la/book/3952/10578367.html'
 
 url = 'https://m.hunhun520.com/book/wuxianHchuanyue/15134674.html'
 url = 'http://www.luoqiu.com/read/1/373549.html'
-url = 'https://www.69shu.com/txt/1523/679709'
-url = 'https://m.00xs.cc/mxiaoshuo/3983/9480362/'
+# url = 'https://www.69shu.com/txt/1523/679709'
+# url = 'https://m.00xs.cc/mxiaoshuo/3983/9480362/'
 
 # url = 'https://m.snwx8.com/book/210/210159/45857682.html'
-url = 'http://www.xitxt.net/read/19533_12.html'
+# url = 'http://www.xitxt.net/read/19533_12.html'
 
 
 conf_loader = ConfigLoader()
@@ -48,18 +48,9 @@ class Reader:
         assert (len(self.items) - 1) * self.ITEM_H > scrollview.height
         self.init_subviews(url)
         
-    def load_page(self, init=False):
-        contents, title, url = self.var_ebook_loader.get_one_chapter()
-        rows = 0
-        for line in contents:
-            len_contents = len(line)
-            rows += int((len_contents - 1) / self.LEN_LINE) + 1
-        
-        split_contents = '—' * self.LEN_LINE
-        contents.append(split_contents)
-        if not init:
-            rows = rows + 1
-        self.queue.put((contents, rows, title, url))
+    def load_chapter(self, init=False):
+        chapter, title, url = self.var_ebook_loader.get_one_chapter()
+        self.queue.put((chapter, title, url, init))
         # print('执行')
         
     def check_title(self):
@@ -70,19 +61,29 @@ class Reader:
         
     def add2contents(self):
         if not self.queue.empty():
-            contents, rows, title, url = self.queue.get()
+            chapter, title, url, init = self.queue.get()
             l = len(self.contents)
-            self.contents = self.contents + contents
+            sum_lines = 0 if init else 1
+            for para in chapter:
+                len_para = len(para)
+                lines = int((len_para - 1) / self.LEN_LINE) + 1
+                sum_lines += lines
+                self.contents.append((para, lines))
+            
+            split_contents = '—' * self.LEN_LINE
+            self.contents.append((split_contents, 1))
+            
             r = len(self.contents)
             self.titles.append((l, r, title, url))
-            self.scrollview.content_size += (0, rows * self.ITEM_H)
+            self.scrollview.content_size += (0, sum_lines * self.ITEM_H)
             self.has_sent_req = False
-            return rows
+            return sum_lines
+        return None
         
-    def load_next_page_bg(self):
+    def load_chapter_bg(self):
         if not self.has_sent_req:
             self.has_sent_req = True
-            self.t = threading.Thread(target=self.load_page)
+            self.t = threading.Thread(target=self.load_chapter)
             self.t.start()
         
     def init_subviews(self, url, i=0, j=0):
@@ -103,40 +104,42 @@ class Reader:
         # (l, r, name)
         self.titles = []
         self.var_ebook_loader.set_url(url)
-        self.load_page(True)
-        rows = self.add2contents()
-        while rows <= len(self.items):
-            self.load_page()
-            rows += self.add2contents()
+        self.load_chapter(True)
+        sum_lines = self.add2contents()
+        # 其实应该仿照img模块的，我懒
+        while sum_lines <= len(self.items):
+            self.load_chapter()
+            sum_lines += self.add2contents()
         
-        rows = 0
-        for line in self.contents[:i]:
-            rows += int((len(line) - 1) / self.LEN_LINE) + 1
-        rows += int(j / self.LEN_LINE)
-        
+        i_wanted = i
+        j_wanted = j
         i, j = 0, 0
         y = 0
         for item in self.items:
-            if len(self.contents[i]) <= j:
+            if len(self.contents[i][0]) <= j:
                 i, j = i + 1, 0
-            item.text = self.contents[i][j: j + self.LEN_LINE]
+            item.text = self.contents[i][0][j: j + self.LEN_LINE]
             item.i = i
             item.j = j
             item.y = y
             y += self.ITEM_H
             j += self.LEN_LINE
-        # print(self.items)
-        self.check_title()
-        # print(rows, i, j)
+            
+        rows = 0
+        for para, lines in self.contents[:i_wanted]:
+            rows += lines
+        rows += int(j_wanted / self.LEN_LINE)
         # 这个破玩意儿改了之后会自动调用监听函数
         scrollview.content_offset = (0, rows*self.ITEM_H)
+        self.check_title()
         
     def reset_scrollbar(self):
         scrollview = self.scrollview
+        offset_x, offset_y = scrollview.content_offset
         max_offset = scrollview.content_size.y - scrollview.height
-        cur_offset = scrollview.content_offset.y
+        cur_offset = offset_y
         min_offset = min(cur_offset, max_offset)
-        scrollview.content_offset = (scrollview.content_offset.x, min_offset)
+        scrollview.content_offset = (offset_x, min_offset)
         
     def scrollview_did_scroll(self, scrollview):
         offset = scrollview.content_offset.y
@@ -144,58 +147,80 @@ class Reader:
         self.cur_offset = offset
         # print('t')
         
+        reader_h = scrollview.height
+        # print('t')
+        
+        content_size = scrollview.content_size[1]
+        # 预加载
+        if content_size and content_size - self.cur_offset <= 3.5 * reader_h:
+            self.load_chapter_bg()
+        
         # 滚动条下移
         if is_scroll_down:
-            y = self.scrollview.content_size[1]
-            if y and self.cur_offset / y >= 0.8:
-                pass
-                # self.load_next_page_bg()
             while True:
-                item = self.items[0]
-                if item.y + self.ITEM_H < offset and self.items[-1].j is not None:
-                    item_end = self.items[-1]
+                item_end = self.items[-1]
+                item_start = self.items[0]
+                if item_end.y + self.ITEM_H -reader_h < offset and item_end.i is not None:
                     i, j = item_end.i, item_end.j + self.LEN_LINE
-                    if len(self.contents[i]) <= j:
+                    if len(self.contents[i][0]) <= j:
                         i, j = i + 1, 0
                     if i >= len(self.contents):
                         text = 'LOADING...'
-                        self.load_next_page_bg()
+                        self.load_chapter_bg()
                         i, j = None, None
                         
                     else:
-                        text = self.contents[i][j: j + self.LEN_LINE]
+                        text = self.contents[i][0][j: j + self.LEN_LINE]
                         
-                    item.text = text
-                    item.y = item_end.y + self.ITEM_H
-                    item.i = i
-                    item.j = j
+                    item_start.text = text
+                    item_start.y = item_end.y + self.ITEM_H
+                    item_start.i = i
+                    item_start.j = j
                     self.items.rotate(-1)
+                elif item_end.i is None and item_end.y <= offset + reader_h:
+                    if self.add2contents() is None:
+                        break
+                                    
+                    item = self.items[-2]
+                    i = item.i + 1
+                    j = 0
+            
+                    if i < len(self.contents):
+                        text = self.contents[i][0][j: j + self.LEN_LINE]
+                        
+                        item_end.text = text
+                        item_end.y = item.y + self.ITEM_H
+                        item_end.i = i
+                        item_end.j = j
+                    # 这个防止空白页吧……会有吗？
+                    else:
+                        break
+                    
                 else:
                     break
         else:
             while True:
-                item = self.items[-1]
-                if item.y > offset + scrollview.height:
-                    item_start = self.items[0]
+                item_end = self.items[-1]
+                item_start = self.items[0]
+                
+                if item_start.y >= offset:
                     i = item_start.i
                     j = item_start.j - self.LEN_LINE
+                    if i is None:
+                        break
                     if j < 0:
-                        len_paragraph = len(self.contents[i-1])
-                        num_line = int((len_paragraph-1) / self.LEN_LINE) + 1
-                        i, j = i - 1, (num_line - 1) * self.LEN_LINE
-                
-                    self.add2contents()
-                    # 待定！！！！
+                        para, lines = self.contents[i-1]
+                        i, j = i - 1, (lines - 1) * self.LEN_LINE
                     
                     if i < 0:
                         break
                     
-                    text = self.contents[i][j: j + self.LEN_LINE]
-                    item.text = text
+                    text = self.contents[i][0][j: j + self.LEN_LINE]
+                    item_end.text = text
                     
-                    item.y = item_start.y - self.ITEM_H
-                    item.i = i
-                    item.j = j
+                    item_end.y = item_start.y - self.ITEM_H
+                    item_end.i = i
+                    item_end.j = j
                     self.items.rotate(1)
                     
                 else:
@@ -216,11 +241,15 @@ class BMTableViewer:
         # nav_view.right_button_items = main_button_items
                     
     def save_bm(self, sender):
-        item = self.reader.items[0]
-        i = item.i
-        j = item.j
-        # print(i, j)
-        if i < 0:
+        scrollview = self.reader.scrollview
+        off_set = scrollview.content_offset.y
+        i = None
+        for item in self.reader.items:
+            if item.y + item.height > off_set:
+                i = item.i
+                j = item.j
+                break
+        if i is None:
             return
         for l, r, name, url in self.reader.titles:
             if l <= i < r:
