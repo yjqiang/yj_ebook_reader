@@ -10,10 +10,10 @@ from itertools import islice
 
 
 url = 'https://e-hentai.org/s/9962198a63/1300988-2'
-# url = 'https://m.k886.net/look/name/SuperDick/cid/36391/id/340777'
+url = 'https://m.k886.net/look/name/SuperDick/cid/36391/id/339212/p/2'
 # url = 'https://raws.mangazuki.co/manga/desire-king/81'
 # url = 'http://www.177pic.info/html/2018/04/1999461.html/19'
-url = 'https://manhwahand.com/manhwa/desire-king/chapter-30?style=list'
+# url = 'https://manhwahand.com/manhwa/desire-king/chapter-30?style=list'
 # url = 'https://nhentai.net/g/249922/2/'
 
 conf_loader = ConfigLoader()
@@ -165,8 +165,7 @@ class Reader:
         
         content_size = self.scrollview.content_size[1]
         # 预加载
-        if content_size and content_size - self.cur_offset <= 2 * reader_h:
-            console.hud_alert('测试')
+        if content_size and content_size - self.cur_offset <= 3.5 * reader_h:
             self.load_img_bg()
             
         # 滚动条下移
