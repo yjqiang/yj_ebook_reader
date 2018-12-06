@@ -10,13 +10,8 @@ from itertools import islice
 
 
 url = 'https://e-hentai.org/s/9962198a63/1300988-2'
-# url = 'https://m.k886.net/look/name/%E8%84%AB%E5%85%89%E5%85%89%E5%B0%8F%E5%B3%B6/cid/35979/id/331785/p/7#'
 # url = 'https://m.k886.net/look/name/SuperDick/cid/36391/id/340777'
 # url = 'https://raws.mangazuki.co/manga/desire-king/81'
-# url = 'https://raws.mangazuki.co/manga/desire-king/48'
-# url = "https://raws.mangazuki.co/manga/desire-king/49"
-
-# url = 'https://e-hentai.org/s/d0c15f30ab/1300988-1'
 # url = 'http://www.177pic.info/html/2018/04/1999461.html/19'
 url = 'https://manhwahand.com/manhwa/desire-king/chapter-30?style=list'
 # url = 'https://nhentai.net/g/249922/2/'
@@ -31,6 +26,7 @@ class Reader:
     ITEM_H = 70
     WIDTH_LINE = 337
     LOADING = Image.named('iob:load_d_32')
+    LOADING_HEIGHT = WIDTH_LINE / LOADING.size.x * LOADING.size.y
         
     def __init__(self, scrollview, tableview):
         self.var_ebook_loader = EImgLoader(dict_conf)
@@ -42,9 +38,9 @@ class Reader:
         assert (len(self.items) - 1) * self.ITEM_H > scrollview.height
         self.init_subviews(url)
         
-    def load_page(self, init=False):
-        contents, title, url = self.var_ebook_loader.get_one_img()
-        self.queue.put((contents, title, url, init))
+    def load_img(self, init=False):
+        imgs, title, url = self.var_ebook_loader.get_one_img()
+        self.queue.put((imgs, title, url, init))
         
     def check_title(self):
         off_set = self.cur_offset
@@ -61,34 +57,37 @@ class Reader:
         
     def add2contents(self):
         if not self.queue.empty():
-            contents, title, url, init = self.queue.get()
+            imgs, title, url, init = self.queue.get()
             l = len(self.contents)
-            self.contents = self.contents + contents
+            
+            # 保证进度条不会完全到底
+            sum_height = -10 if init else 0
+            for img in imgs:
+                resized_height = self.WIDTH_LINE / img.size.x * img.size.y
+                sum_height += resized_height
+            
+                self.contents.append((img, resized_height))
+                
             r = len(self.contents)
             if self.titles:
+                # merge 当一个页面多个图片
                 last_title = self.titles[-1]
                 if last_title[3] == url:
                     self.titles[-1] = (last_title[0], r, title, url)
-                    console.hud_alert('merge')
                 else:
                     self.titles.append((l, r, title, url))
             else:
                 self.titles.append((l, r, title, url))
-                        
-            height = 0
-            for content in contents:
-                height += self.WIDTH_LINE / content.size.x * content.size.y
-            if init:
-                height -= 10
-            self.scrollview.content_size += (0, height)
+                
+            self.scrollview.content_size += (0, sum_height)
             self.has_sent_req = False
             return True
         return False
         
-    def load_next_page_bg(self):
+    def load_img_bg(self):
         if not self.has_sent_req:
             self.has_sent_req = True
-            self.t = threading.Thread(target=self.load_page)
+            self.t = threading.Thread(target=self.load_img)
             self.t.start()
         
     def init_subviews(self, url, i=0, j=0):
@@ -100,16 +99,16 @@ class Reader:
         scrollview.content_size = (scrollview.width, 0)
         
         self.cur_offset = 0
-            
+        # [(image, resized_height),]
         self.contents = []
         # (l, r, name)
         self.titles = []
         self.var_ebook_loader.set_url(url)
-        self.load_page(True)
+        self.load_img(True)
         self.add2contents()
         # 条件应该是把一页填充满而且书签模式下尽量加载
         while scrollview.content_size.y <= scrollview.height or len(self.contents) <= i:
-            self.load_page()
+            self.load_img()
             self.add2contents()
         # print(scrollview.content_size)
         
@@ -120,14 +119,14 @@ class Reader:
         start = max(0, len_items - len_content)
         remain = islice(self.items, start, len_items)
         for i, (item, content) in enumerate(zip(remain, self.contents)):
-            img = content
-            img_width, img_height = img.size
-            item.height = self.WIDTH_LINE / img_width * img_height
+            img, resize_height = content
+            item.height = resize_height
             item.image = img
             item.i = i
             item.y = y
-            y += item.height
-        
+            y += resize_height
+            
+        # 未使用的item往上放
         y = 0
         if len_content < len_items:
             end = len_items - len_content - 1
@@ -137,26 +136,16 @@ class Reader:
                 item.image = None
                 y -= item.height
                 item.y = y
-            
+         
+        # 书签偏移量
         h = 0
         for content in self.contents[:rows]:
-            img = content
-            img_width, img_height = img.size
-            height = self.WIDTH_LINE / img_width * img_height
-            h += height
-            
-        # print(self.items)
-        self.check_title()
-        # print(rows, i, j)
+            img, resize_height = content
+            h += resize_height
+
         # 这个破玩意儿改了之后会自动调用监听函数
-        
         scrollview.content_offset = (0, h+j)
-        
-    def reset_item_height(self, img, item):
-        width = item.width
-        img_width, img_height = img.size
-        item.height = width / img_width * img_height
-        return item.height
+        self.check_title()
         
     def reset_scrollbar(self):
         scrollview = self.scrollview
@@ -174,30 +163,34 @@ class Reader:
         reader_h = scrollview.height
         # print('t')
         
+        content_size = self.scrollview.content_size[1]
+        # 预加载
+        if content_size and content_size - self.cur_offset <= 2 * reader_h:
+            console.hud_alert('测试')
+            self.load_img_bg()
+            
         # 滚动条下移
         if is_scroll_down:
-            y = self.scrollview.content_size[1]
-            if y and self.cur_offset / y >= 0.8:
-                pass
             while True:
                 item_end = self.items[-1]
-                item = self.items[0]
+                item_start = self.items[0]
                 if (item_end.y + item_end.height - reader_h <= offset and item_end.i is not None):
                     # console.hud_alert('应该load')
                     i = item_end.i + 1
             
                     if i >= len(self.contents):
                         img = self.LOADING
-                        self.load_next_page_bg()
+                        resized_height = self.LOADING_HEIGHT
+                        self.load_img_bg()
                         i = None
                         
                     else:
-                        img = self.contents[i]
+                        img, resized_height = self.contents[i]
                         
-                    item.image = img
-                    item.y = item_end.y + item_end.height
-                    self.reset_item_height(img, item)
-                    item.i = i
+                    item_start.image = img
+                    item_start.y = item_end.y + item_end.height
+                    item_start.height = resized_height
+                    item_start.i = i
                     self.items.rotate(-1)
                 elif item_end.i is None and item_end.y <= offset + reader_h:
                     # console.hud_alert(f'应该refresh')
@@ -208,11 +201,11 @@ class Reader:
                     i = item.i + 1
             
                     if i < len(self.contents):
-                        img = self.contents[i]
+                        img, resized_height = self.contents[i]
                         
                         item_end.image = img
                         item_end.y = item.y + item.height
-                        self.reset_item_height(img, item_end)
+                        item_end.height = resized_height
                         item_end.i = i
                     # 这个防止空白页吧……会有吗？
                     else:
@@ -221,18 +214,18 @@ class Reader:
                     break
         else:
             while True:
-                item = self.items[-1]
+                item_end = self.items[-1]
                 item_start = self.items[0]
                 if item_start.y >= offset:
                     # None的时候仅仅是初始化设计导致的
                     if item_start.i is None or item_start.i <= 0:
                         break
                     i = item_start.i - 1
-                    img = self.contents[i]
-                    item.image = img
-                    
-                    item.y = item_start.y - self.reset_item_height(img, item)
-                    item.i = i
+                    img, resized_height = self.contents[i]
+                    item_end.image = img
+                    item_end.height = resized_height
+                    item_end.y = item_start.y - resized_height
+                    item_end.i = i
                     self.items.rotate(1)
                     
                 else:
@@ -285,22 +278,22 @@ class BMTableViewer:
 
 # url = input('请输入:\n')
 reader_view = ui.load_view('eimg_reader')
-sc = reader_view['scrollview']
 bm_view = ui.load_view('bookmark')
 nav_view = ui.NavigationView(reader_view)
-tb = bm_view['tableview']
 
+tb = bm_view['tableview']
 tb.data_source.items = dict_bm['bookmarks']
 tb.data_source.edit_action = conf_loader.refresh_file
 
+sc = reader_view['scrollview']
 for i in range(9):
     # print(reader_view[f'imageview{i}'])
     sc.add_subview(reader_view[f'imageview{i}'])
 
-var = Reader(sc, tb)
-var_bm_table_viewer = BMTableViewer(var)
+var_reader = Reader(sc, tb)
+var_bm_table_viewer = BMTableViewer(var_reader)
 
-sc.delegate = var
+sc.delegate = var_reader
 tb.delegate = var_bm_table_viewer
 
 reader_view['button_save_bm'].action = var_bm_table_viewer.save_bm

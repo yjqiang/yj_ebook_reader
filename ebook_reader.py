@@ -25,7 +25,9 @@ url = 'https://www.69shu.com/txt/1523/679709'
 url = 'https://m.00xs.cc/mxiaoshuo/3983/9480362/'
 
 url = 'https://m.snwx8.com/book/210/210159/45857682.html'
-url = 'http://www.xitxt.net/read/19533_12.html'
+# url = 'http://www.xitxt.net/read/19533_12.html'
+
+# url = 'https://m.123du.cc/dudu-40/170435/19253530.html'
 
 conf_loader = ConfigLoader()
 
