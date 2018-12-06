@@ -18,7 +18,7 @@ url = 'https://e-hentai.org/s/9962198a63/1300988-2'
 
 # url = 'https://e-hentai.org/s/d0c15f30ab/1300988-1'
 # url = 'http://www.177pic.info/html/2018/04/1999461.html/19'
-# url = 'https://manhwahand.com/manhwa/desire-king/chapter-77/?style=list'
+url = 'https://manhwahand.com/manhwa/desire-king/chapter-1/?style=list'
 
 conf_loader = ConfigLoader()
 

@@ -5,7 +5,13 @@ import ui
 
 class EImgLoader(EBookLoader):
     def set_url(self, url):
-        super().set_url(url)
+        self.url = url
+        for i in self.dict_conf['websites']:
+            if i['url'] in url:
+                self.conf = i
+                break
+        else:
+            self.conf = None
         self.encoding_page()
         self.contents = self.get_content()
         self.title = self.get_title()

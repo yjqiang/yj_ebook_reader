@@ -22,8 +22,28 @@ class EBookLoader:
         for i in self.dict_conf['websites']:
             if i['url'] in url:
                 self.conf = i
-                return
-        self.conf = None
+                break
+        else:
+            self.conf = None
+        self.encoding_with_captcha()
+        self.contents = self.get_content()
+        self.cur_offset = 0
+        
+    def get_one_chapter(self):
+        if self.cur_offset > 0:
+            self.get_url2next()
+            self.encoding_with_captcha()
+            self.contents = self.get_content()
+            self.cur_offset = 0
+        words = self.contents
+        title = self.title
+        if self.encoding == 'big5':
+            words = [zh_st.t2s(line) for line in words]
+            title = zh_st.t2s(self.title)
+        self.cur_offset += 1
+        return words, title, self.url
+        
+        
         
     def get_criteria(self, dict_criteria):
         name = dict_criteria.get('name', None)
@@ -125,23 +145,19 @@ class EBookLoader:
             title = self.soups.find('title').string
         return str(title).strip()
         
-    def get_text_with_check(self):
+    def encoding_with_captcha(self):
         re_safe_dog = re.compile('self.location="(.+)"')
         while True:
+            self.encoding_page()
             title = self.get_title()
             if '服务器安全狗防护验证页面' in title:
                 console.hud_alert('验证')
                 js = self.soups.find('script').string
                 link = re.findall(re_safe_dog, js)[0]
                 self.url = urljoin(self.url, link)
-                self.encoding_page()
                 # print(link)
             else:
                 break
-                
-        words = self.get_content()
-        if self.encoding == 'big5':
-            words = [zh_st.t2s(line) for line in words]
-            title = zh_st.t2s(title)
-        return words, title, self.url
+        self.title = title
+        return
                 

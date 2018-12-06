@@ -48,8 +48,7 @@ class Reader:
         self.init_subviews(url)
         
     def load_page(self, init=False):
-        self.var_ebook_loader.encoding_page()
-        contents, title, url = self.var_ebook_loader.get_text_with_check()
+        contents, title, url = self.var_ebook_loader.get_one_chapter()
         rows = 0
         for line in contents:
             len_contents = len(line)
@@ -82,12 +81,8 @@ class Reader:
     def load_next_page_bg(self):
         if not self.has_sent_req:
             self.has_sent_req = True
-            self.t = threading.Thread(target=self.load_next_page)
+            self.t = threading.Thread(target=self.load_page)
             self.t.start()
-            
-    def load_next_page(self):
-        self.var_ebook_loader.get_url2next()
-        self.load_page()
         
     def init_subviews(self, url, i=0, j=0):
         if self.has_sent_req:
@@ -110,7 +105,7 @@ class Reader:
         self.load_page(True)
         rows = self.add2contents()
         while rows <= len(self.items):
-            self.load_next_page()
+            self.load_page()
             rows += self.add2contents()
         
         rows = 0
