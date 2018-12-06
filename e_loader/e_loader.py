@@ -53,12 +53,13 @@ class ELoader:
                     return
 
     def encoding_page(self):
+        headers = {**self.headers, **self.conf.get('headers', {})}
         if self.url in self.cache:
             text = self.cache[self.url]
             soups = BeautifulSoup(text, 'html.parser')
             self.soups = soups
             return soups
-        rsp = web.get(self.url, headers=self.headers)
+        rsp = web.get(self.url, headers=headers)
         binary = rsp.content
         text = rsp.text
         soups = BeautifulSoup(text, 'html.parser')

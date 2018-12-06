@@ -152,6 +152,25 @@
     string = "下一"
     
 [[websites]]
+  url = "m.123du.cc"
+  # 自己抓包刷新
+  headers = {cookie = "nxgmnmry=965d2e2c909b7b10"}
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {class = "TxtContent"}
+  [[websites.content]]
+    name = "br"
+  [[websites.next]]
+    name = 'a'
+    string = "下一[页頁]"
+  [[websites.next]]
+    name = 'a'
+    string = "下一章"
+    
+[[websites]]
   url = "e-hentai.org"
   encoding_func = ""
   encoding = ""
