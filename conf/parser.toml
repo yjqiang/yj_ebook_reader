@@ -216,7 +216,20 @@
     key = "src"
   [[websites.next]]
     name = 'a'
-    attrs = "btn next_page"
+    attrs = {class = "btn next_page"}
+    
+[[websites]]
+  url = "nhentai.net"
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "img"
+    attrs = {class = true}
+    key = "src"
+  [[websites.next]]
+    name = 'a'
+    attrs = {class = "next"}
     
 # 可以认为这是个default设置
 [[websites]]
