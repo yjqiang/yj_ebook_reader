@@ -150,11 +150,12 @@
   [[websites.next]]
     name = 'a'
     string = "下一"
-    
+
+# 作废,网站搞得麻烦,时效+固定书目,除非js了    
 [[websites]]
   url = "m.123du.cc"
   # 自己抓包刷新
-  headers = {cookie = "nxgmnmry=965d2e2c909b7b10"}
+  headers = {cookie = "nxgmnmry=22b1144258bb2b3c"}
   encoding_func = ""
   encoding = ""
   title = ""
