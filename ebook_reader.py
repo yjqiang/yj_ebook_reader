@@ -125,6 +125,7 @@ class Reader:
             if len(self.contents[i][0]) <= j:
                 i, j = i + 1, 0
             item.text = self.contents[i][0][j: j + self.LEN_LINE]
+            # i代表段落index，j代表了段落里面具体的文字起始下标
             item.i = i
             item.j = j
             item.y = y
