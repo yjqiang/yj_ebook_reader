@@ -73,8 +73,7 @@ class Reader:
             l = len(self.contents)
             sum_num_lines = 0 if init else 1
             for para in chapter:
-                len_para = len(para)
-                num_lines = int((len_para - 1) / self.LEN_LINE) + 1
+                num_lines = int((len(para) - 1) / self.LEN_LINE) + 1
                 sum_num_lines += num_lines
                 self.contents.append((para, num_lines))
             
@@ -112,7 +111,7 @@ class Reader:
         self.var_ebook_loader.set_url(url)
         self.load_chapter(True)
         sum_num_lines = self.add2contents()
-        # 其实应该仿照img模块的，我懒
+        # 其实应该仿照img模块的，但是没必要，白白把逻辑弄麻烦了
         while sum_num_lines <= len(self.items):
             self.load_chapter()
             sum_num_lines += self.add2contents()
