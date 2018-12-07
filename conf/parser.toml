@@ -1,10 +1,5 @@
 [[websites]]
-  url = "www.luoxia.com"
-  # content <meta content="text/html; charset=??" http-equiv="Content-Type"/>
-  # charset <meta charset="utf-8" />
-  # dammit UnicodeDammit
-  encoding_func = "charset"
-  encoding = ""
+  url = "www.luoxia.com"  
   # 判定标题的
   title = ""
   # 判定文章的(例如:br / b ....)
@@ -18,8 +13,9 @@
 
 [[websites]]
   url = "www.xbookcn.com"
-  encoding_func = "dammit"
-  encoding = ""
+  # 空 就是不管了
+  # 其他就是直接指定
+  encoding = "big5"
   title = ""
   words_tag = "p"
   [[websites.content]]
@@ -31,8 +27,6 @@
 
 [[websites]]
   url = "www.mfxsydw.com"
-  encoding_func = "charset"
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "p"
@@ -44,8 +38,6 @@
 [[websites]]
   # 这货有func但是错误的mmp
   url = "www.piaotian.com"
-  encoding_func = ""
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "br"
@@ -56,8 +48,6 @@
     
 [[websites]]
   url = "m.qu.la"
-  encoding_func = ""
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "div"
@@ -68,7 +58,6 @@
     
 [[websites]]
   url = "www.176novel.com"
-  encoding_func = ""
   encoding = "gbk"
   title = ""
   [[websites.content]]
@@ -80,8 +69,6 @@
     
 [[websites]]
   url = "m.hunhun520.com"
-  encoding_func = ""
-  encoding = "gbk"
   title = ""
   [[websites.content]]
     name = "div"
@@ -92,7 +79,6 @@
     
 [[websites]]
   url = "www.luoqiu.com"
-  encoding_func = ""
   encoding = "gbk"
   title = ""
   [[websites.content]]
@@ -106,7 +92,6 @@
     
 [[websites]]
   url = "www.69shu.com"
-  encoding_func = ""
   encoding = "gbk"
   title = ""
   [[websites.content]]
@@ -118,7 +103,6 @@
         
 [[websites]]
   url = "m.00xs.cc"
-  encoding_func = ""
   encoding = "gbk"
   title = ""
   [[websites.content]]
@@ -130,7 +114,6 @@
     
 [[websites]]
   url = "m.snwx8.com"
-  encoding_func = ""
   encoding = "gbk"
   title = ""
   [[websites.content]]
@@ -142,8 +125,6 @@
     
 [[websites]]
   url = "www.xitxt.net"
-  encoding_func = ""
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "article"
@@ -156,8 +137,6 @@
   url = "m.123du.cc"
   # 自己抓包刷新
   headers = {cookie = "nxgmnmry=22b1144258bb2b3c"}
-  encoding_func = ""
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "div"
@@ -173,8 +152,6 @@
     
 [[websites]]
   url = "m.176xsw.com"
-  encoding_func = ""
-  encoding = "utf-8"
   title = ""
   [[websites.content]]
     name = "div"
@@ -185,8 +162,6 @@
     
 [[websites]]
   url = "e-hentai.org"
-  encoding_func = ""
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "img"
@@ -198,8 +173,6 @@
     
 [[websites]]
   url = "m.k886.net"
-  encoding_func = ""
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "img"
@@ -214,8 +187,6 @@
     
 [[websites]]
   url = "raws.mangazuki.co"
-  encoding_func = ""
-  encoding = ""
   title = "title"
   [[websites.content]]
     name = "img"
@@ -226,8 +197,6 @@
     
 [[websites]]
   url = "www.177pic.info"
-  encoding_func = ""
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "img"
@@ -239,8 +208,6 @@
     
 [[websites]]
   url = "manhwahand.com"
-  encoding_func = ""
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "img"
@@ -252,8 +219,6 @@
     
 [[websites]]
   url = "nhentai.net"
-  encoding_func = ""
-  encoding = ""
   title = ""
   [[websites.content]]
     name = "img"
@@ -266,8 +231,7 @@
 # 可以认为这是个default设置
 [[websites]]
   url = "."
-  encoding_func = ""
-  encoding = ""
+  encoding = "utf-8"
   title = ""
   [[websites.content]]
     name = "p"

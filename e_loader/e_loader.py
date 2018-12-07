@@ -1,7 +1,7 @@
 import re
 from urllib.parse import urljoin
 import web
-from bs4 import BeautifulSoup, UnicodeDammit
+from bs4 import BeautifulSoup
 
 
 class ELoader:
@@ -55,43 +55,19 @@ class ELoader:
     def encoding_page(self):
         headers = {**self.headers, **self.conf.get('headers', {})}
         if self.url in self.cache:
-            text = self.cache[self.url]
+            text, encoding = self.cache[self.url]
             soups = BeautifulSoup(text, 'html.parser')
+            self.encoding = encoding
             self.soups = soups
             self.text = text
             return soups
         rsp = web.get(self.url, headers=headers)
-        binary = rsp.content
+        rsp.encoding = self.conf.get('encoding', rsp.encoding)
+        self.encoding = rsp.encoding
         text = rsp.text
         soups = BeautifulSoup(text, 'html.parser')
-
-        encoding = self.conf['encoding']
-        func_type = self.conf['encoding_func']
-        if encoding:
-            pass
-        elif func_type:
-            if func_type == 'content':
-                tag = soups.find(
-                    'meta',
-                    attrs={
-                        'http-equiv': re.compile('content-type', re.IGNORECASE)
-                    })
-                content = tag['content']
-                encoding = re.search('charset=([^;]*)', content).group(1)
-            elif func_type == 'charset':
-                tag = soups.find('meta', charset=True)
-                encoding = tag['charset']
-            elif func_type == 'dammit':
-                encoding = UnicodeDammit(binary).original_encoding
-        else:
-            encoding = None
-        self.encoding = encoding if encoding else rsp.encoding
-        print('encoding', self.encoding)
-        if encoding is not None:
-            text = binary.decode(encoding)
-            soups = BeautifulSoup(text, 'html.parser')
         # print(soups.prettify())
-        self.cache[self.url] = text
+        self.cache[self.url] = (text, self.encoding)
         self.text = text
         self.soups = soups
         return soups
