@@ -58,6 +58,7 @@ class ELoader:
             text = self.cache[self.url]
             soups = BeautifulSoup(text, 'html.parser')
             self.soups = soups
+            self.text = text
             return soups
         rsp = web.get(self.url, headers=headers)
         binary = rsp.content
