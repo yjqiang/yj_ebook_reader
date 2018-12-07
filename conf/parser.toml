@@ -17,7 +17,6 @@
   # 其他就是直接指定
   encoding = "big5"
   title = ""
-  words_tag = "p"
   [[websites.content]]
     name = "p"
     attrs = {class = false}
