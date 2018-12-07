@@ -35,9 +35,10 @@ class ELoader:
         next_tags = self.conf['next']
         for next_tag in next_tags:
             if 're_body' in next_tag:
-                results = re.findall(re.compile(next_tag['re_body']), self.text)
-                link = results[0]
-                self.url = urljoin(self.url, link)
+                result = re.search(next_tag['re_body'], self.text)
+                if result is None:
+                    return None
+                self.url = urljoin(self.url, result.group(1))
                 print(self.url)
                 return self.url
             name, attrs, string = self.get_criteria(next_tag)
