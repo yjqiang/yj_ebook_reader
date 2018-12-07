@@ -172,6 +172,18 @@
     string = "下一章"
     
 [[websites]]
+  url = "m.176xsw.com"
+  encoding_func = ""
+  encoding = "utf-8"
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {class = "readcontent"}
+  [[websites.next]]
+    name = 'a'
+    string = "下一"  
+    
+[[websites]]
   url = "e-hentai.org"
   encoding_func = ""
   encoding = ""
