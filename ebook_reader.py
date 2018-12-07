@@ -70,6 +70,10 @@ class Reader:
     def add2contents(self):
         if not self.queue.empty():
             chapter, title, url, init = self.queue.get()
+            if chapter is None:
+                # 到底之后不再复位self.has_sent_req
+                console.hud_alert('已经阅读完毕')
+                return None
             l = len(self.contents)
             sum_num_lines = 0 if init else 1
             for para in chapter:

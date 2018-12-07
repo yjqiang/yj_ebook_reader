@@ -21,7 +21,8 @@ class EBookLoader(ELoader):
         
     def get_one_chapter(self):
         if self.cur_offset > 0:
-            self.get_url2next()
+            if self.get_url2next() is None:
+                return None, None, None
             self.encoding_with_captcha()
             self.contents = self.get_content()
             self.cur_offset = 0

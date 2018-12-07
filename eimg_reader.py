@@ -58,6 +58,9 @@ class Reader:
     def add2contents(self):
         if not self.queue.empty():
             imgs, title, url, init = self.queue.get()
+            if imgs is None:
+                console.hud_alert('已经阅读完毕')
+                return False
             l = len(self.contents)
             
             # 保证进度条不会完全到底

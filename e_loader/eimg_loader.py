@@ -19,7 +19,8 @@ class EImgLoader(ELoader):
         
     def get_one_img(self):
         if self.cur_offset >= len(self.contents):
-            self.get_url2next()
+            if self.get_url2next() is None:
+                return None, None, None
             self.encoding_page()
             self.contents = self.get_content()
             self.title = self.get_title()

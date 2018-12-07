@@ -39,7 +39,7 @@ class ELoader:
                 link = results[0]
                 self.url = urljoin(self.url, link)
                 print(self.url)
-                return
+                return self.url
             name, attrs, string = self.get_criteria(next_tag)
             # print(text)
             results = self.soups.find_all(name, attrs=attrs, string=string)
@@ -50,24 +50,27 @@ class ELoader:
                 # 防止j s (此时一般就是没了)
                 if '/' in link or '.' in link:
                     self.url = urljoin(self.url, link)
-                    return
+                    return self.url
+        return None
 
-    def encoding_page(self):
+    def encoding_page(self, url=None):
+        if url is None:
+            url = self.url
         headers = {**self.headers, **self.conf.get('headers', {})}
-        if self.url in self.cache:
-            text, encoding = self.cache[self.url]
+        if url in self.cache:
+            text, encoding = self.cache[url]
             soups = BeautifulSoup(text, 'html.parser')
             self.encoding = encoding
             self.soups = soups
             self.text = text
             return soups
-        rsp = web.get(self.url, headers=headers)
+        rsp = web.get(url, headers=headers)
         rsp.encoding = self.conf.get('encoding', rsp.encoding)
         self.encoding = rsp.encoding
         text = rsp.text
         soups = BeautifulSoup(text, 'html.parser')
         # print(soups.prettify())
-        self.cache[self.url] = (text, self.encoding)
+        self.cache[url] = (text, self.encoding)
         self.text = text
         self.soups = soups
         return soups
