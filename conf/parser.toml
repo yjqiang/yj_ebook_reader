@@ -1,0 +1,277 @@
+[[websites]]
+  url = "www.luoxia.com"
+  # content <meta content="text/html; charset=??" http-equiv="Content-Type"/>
+  # charset <meta charset="utf-8" />
+  # dammit UnicodeDammit
+  encoding_func = "charset"
+  encoding = ""
+  # 判定标题的
+  title = ""
+  # 判定文章的(例如:br / b ....)
+  [[websites.content]]
+    name = "p"
+    attrs = {class = false}
+  # 防止有多级的url 下一页下一章混着
+  [[websites.next]]
+    name = 'a'
+    attrs = {rel = "next"}    
+
+[[websites]]
+  url = "www.xbookcn.com"
+  encoding_func = "dammit"
+  encoding = ""
+  title = ""
+  words_tag = "p"
+  [[websites.content]]
+    name = "p"
+    attrs = {class = false}
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+
+[[websites]]
+  url = "www.mfxsydw.com"
+  encoding_func = "charset"
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "p"
+    attrs = {class = false}
+  [[websites.next]]
+    name = 'a'
+    attrs = {rel = "next"}
+  
+[[websites]]
+  # 这货有func但是错误的mmp
+  url = "www.piaotian.com"
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "br"
+    attrs = {class = false}
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+    
+[[websites]]
+  url = "m.qu.la"
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {}
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+    
+[[websites]]
+  url = "www.176novel.com"
+  encoding_func = ""
+  encoding = "gbk"
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {id = "nr1"}
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+    
+[[websites]]
+  url = "m.hunhun520.com"
+  encoding_func = ""
+  encoding = "gbk"
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {id = "content"}
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+    
+[[websites]]
+  url = "www.luoqiu.com"
+  encoding_func = ""
+  encoding = "gbk"
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {id = "content"}
+  [[websites.content]]
+    name = "br"
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+    
+[[websites]]
+  url = "www.69shu.com"
+  encoding_func = ""
+  encoding = "gbk"
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {class = "yd_text2"}
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+        
+[[websites]]
+  url = "m.00xs.cc"
+  encoding_func = ""
+  encoding = "gbk"
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {id = "nr1"}
+  [[websites.next]]
+    name = 'a'
+    string = "继续看"
+    
+[[websites]]
+  url = "m.snwx8.com"
+  encoding_func = ""
+  encoding = "gbk"
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {id = "nr1"}
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+    
+[[websites]]
+  url = "www.xitxt.net"
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "article"
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+
+# 作废,网站搞得麻烦,时效+固定书目,除非js了    
+[[websites]]
+  url = "m.123du.cc"
+  # 自己抓包刷新
+  headers = {cookie = "nxgmnmry=22b1144258bb2b3c"}
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {class = "TxtContent"}
+  [[websites.content]]
+    name = "br"
+  [[websites.next]]
+    name = 'a'
+    string = "下一[页頁]"
+  [[websites.next]]
+    name = 'a'
+    string = "下一章"
+    
+[[websites]]
+  url = "m.176xsw.com"
+  encoding_func = ""
+  encoding = "utf-8"
+  title = ""
+  [[websites.content]]
+    name = "div"
+    attrs = {class = "readcontent"}
+  [[websites.next]]
+    name = 'a'
+    string = "下一"  
+    
+[[websites]]
+  url = "e-hentai.org"
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "img"
+    attrs = {id = "img"}
+    key = "src"
+  [[websites.next]]
+    name = 'a'
+    attrs = {id = "next"}
+    
+[[websites]]
+  url = "m.k886.net"
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "img"
+    attrs = {alt = true, height = false}
+    key = "src"
+  [[websites.next]]
+    name = 'a'
+    string = "下一[页頁]"
+  [[websites.next]]
+    name = 'a'
+    string = "下一章"
+    
+[[websites]]
+  url = "raws.mangazuki.co"
+  encoding_func = ""
+  encoding = ""
+  title = "title"
+  [[websites.content]]
+    name = "img"
+    attrs = {class = "img-responsive", data-src = true}
+    key = "data-src"
+  [[websites.next]]
+    re_body = "var[ ]*next_chapter[^;]+\"(.+)\""
+    
+[[websites]]
+  url = "www.177pic.info"
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "img"
+    attrs = {class = true}
+    key = "src"
+  [[websites.next]]
+    name = 'a'
+    string = "下一"
+    
+[[websites]]
+  url = "manhwahand.com"
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "img"
+    attrs = {class = true, id = true}
+    key = "src"
+  [[websites.next]]
+    name = 'a'
+    attrs = {class = "btn next_page"}
+    
+[[websites]]
+  url = "nhentai.net"
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "img"
+    attrs = {class = true}
+    key = "src"
+  [[websites.next]]
+    name = 'a'
+    attrs = {class = "next"}
+    
+# 可以认为这是个default设置
+[[websites]]
+  url = "."
+  encoding_func = ""
+  encoding = ""
+  title = ""
+  [[websites.content]]
+    name = "p"
+    attrs = {class = false}
+  [[websites.next]]
+    name = 'a'
+    attrs = {rel = "next"}
