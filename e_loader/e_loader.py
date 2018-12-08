@@ -83,3 +83,18 @@ class ELoader:
         name, attrs, string, _ = self.get_rule(rule, def_name='title')
         title = self.soups.find(name, attrs=attrs, string=string).string
         return str(title).strip()
+        
+    def get_content(self, extra_key=None):
+        rules = self.conf['content']
+        results = []
+        if extra_key is None:
+            for rule in rules:
+                name, attrs, string, _ = self.get_rule(rule)
+                tags = self.soups.find_all(name, attrs=attrs, string=string)
+                results += tags
+        else:
+            for rule in rules:
+                name, attrs, string, key = self.get_rule(rule, extra_key)
+                tags = self.soups.find_all(name, attrs=attrs, string=string)
+                results.append((tags, key))
+        return results
