@@ -37,10 +37,10 @@ class ELoader:
             if 're_body' in next_tag:
                 result = re.search(next_tag['re_body'], self.text)
                 if result is None:
-                    return None
+                    return False
                 self.url = urljoin(self.url, result.group(1))
                 print(self.url)
-                return self.url
+                return True
             name, attrs, string = self.get_criteria(next_tag)
             # print(text)
             result = self.soups.find(name, attrs=attrs, string=string)
@@ -51,8 +51,8 @@ class ELoader:
                 # 防止j s (此时一般就是没了)
                 if '/' in link or '.' in link:
                     self.url = urljoin(self.url, link)
-                    return self.url
-        return None
+                    return True
+        return False
 
     def encoding_page(self, url=None):
         if url is None:
