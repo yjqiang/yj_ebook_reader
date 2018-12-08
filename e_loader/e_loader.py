@@ -33,16 +33,16 @@ class ELoader:
         return name, attrs, string, key
 
     def get_url2next(self):
-        next_tags = self.conf['next']
-        for next_tag in next_tags:
-            if 're_body' in next_tag:
-                result = re.search(next_tag['re_body'], self.text)
+        rules = self.conf['next']
+        for rule in rules:
+            if 're_body' in rule:
+                result = re.search(rule['re_body'], self.text)
                 if result is None:
                     return False
                 self.url = urljoin(self.url, result.group(1))
                 print(self.url)
                 return True
-            name, attrs, string, key = self.get_rule(next_tag, 'href')
+            name, attrs, string, key = self.get_rule(rule, 'href')
             # print(text)
             result = self.soups.find(name, attrs=attrs, string=string)
             # print(results)
@@ -78,8 +78,8 @@ class ELoader:
         return soups
     
     def get_title(self):
-        title_conf = self.conf.get('title', {})
+        rule = self.conf.get('title', {})
         # print(title_conf)
-        name, attrs, string, _ = self.get_rule(title_conf, def_name='title')
+        name, attrs, string, _ = self.get_rule(rule, def_name='title')
         title = self.soups.find(name, attrs=attrs, string=string).string
         return str(title).strip()
