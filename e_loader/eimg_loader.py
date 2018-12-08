@@ -39,7 +39,7 @@ class EImgLoader(ELoader):
         img_tags = self.conf['content']
         urls = []
         for img_tag in img_tags:
-            name, attrs, string, key = self.get_rule(img_tag, 'src')
+            name, attrs, string, key = self.get_rule(img_tag, def_key='src')
             labels = self.soups.find_all(name, attrs=attrs, string=string)
             urls += [i[key] for i in labels]
         

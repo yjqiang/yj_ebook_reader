@@ -24,12 +24,12 @@ class ELoader:
         else:
             self.conf = None
         
-    def get_rule(self, dict_rule, default_key=None):
-        name = dict_rule.get('name', None)
+    def get_rule(self, dict_rule, def_key=None, def_name=None):
+        name = dict_rule.get('name', def_name)
         attrs = dict_rule.get('attrs', {})
         string_pattern = dict_rule.get('string', None)
         string = None if string_pattern is None else re.compile(string_pattern)
-        key = dict_rule.get('key', default_key)
+        key = dict_rule.get('key', def_key)
         return name, attrs, string, key
 
     def get_url2next(self):
@@ -46,7 +46,7 @@ class ELoader:
             # print(text)
             result = self.soups.find(name, attrs=attrs, string=string)
             # print(results)
-            if result:
+            if result is not None:
                 link = result[key]
                 # print(results)
                 # 防止j s (此时一般就是没了)
@@ -78,9 +78,8 @@ class ELoader:
         return soups
     
     def get_title(self):
-        title_func = self.conf['title']
-        if title_func:
-            title = self.soups.find(title_func).string
-        else:
-            title = self.soups.find('title').string
+        title_conf = self.conf.get('title', {})
+        # print(title_conf)
+        name, attrs, string, _ = self.get_rule(title_conf, def_name='title')
+        title = self.soups.find(name, attrs=attrs, string=string).string
         return str(title).strip()

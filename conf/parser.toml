@@ -1,7 +1,6 @@
 [[websites]]
   url = "www.luoxia.com"  
   # 判定标题的
-  title = ""
   # 判定文章的(例如:br / b ....)
   [[websites.content]]
     name = "p"
@@ -16,7 +15,6 @@
   # 空 就是不管了
   # 其他就是直接指定
   encoding = "big5"
-  title = ""
   [[websites.content]]
     name = "p"
     attrs = {class = false}
@@ -26,7 +24,6 @@
 
 [[websites]]
   url = "www.mfxsydw.com"
-  title = ""
   [[websites.content]]
     name = "p"
     attrs = {class = false}
@@ -37,7 +34,6 @@
 [[websites]]
   # 这货有func但是错误的mmp
   url = "www.piaotian.com"
-  title = ""
   [[websites.content]]
     name = "br"
     attrs = {class = false}
@@ -47,7 +43,6 @@
     
 [[websites]]
   url = "m.qu.la"
-  title = ""
   [[websites.content]]
     name = "div"
     attrs = {}
@@ -58,7 +53,6 @@
 [[websites]]
   url = "www.176novel.com"
   encoding = "gbk"
-  title = ""
   [[websites.content]]
     name = "div"
     attrs = {id = "nr1"}
@@ -68,7 +62,6 @@
     
 [[websites]]
   url = "m.hunhun520.com"
-  title = ""
   [[websites.content]]
     name = "div"
     attrs = {id = "content"}
@@ -79,7 +72,6 @@
 [[websites]]
   url = "www.luoqiu.com"
   encoding = "gbk"
-  title = ""
   [[websites.content]]
     name = "div"
     attrs = {id = "content"}
@@ -92,7 +84,6 @@
 [[websites]]
   url = "www.69shu.com"
   encoding = "gbk"
-  title = ""
   [[websites.content]]
     name = "div"
     attrs = {class = "yd_text2"}
@@ -103,7 +94,6 @@
 [[websites]]
   url = "m.00xs.cc"
   encoding = "gbk"
-  title = ""
   [[websites.content]]
     name = "div"
     attrs = {id = "nr1"}
@@ -114,7 +104,6 @@
 [[websites]]
   url = "m.snwx8.com"
   encoding = "gbk"
-  title = ""
   [[websites.content]]
     name = "div"
     attrs = {id = "nr1"}
@@ -124,7 +113,6 @@
     
 [[websites]]
   url = "www.xitxt.net"
-  title = ""
   [[websites.content]]
     name = "article"
   [[websites.next]]
@@ -136,7 +124,6 @@
   url = "m.123du.cc"
   # 自己抓包刷新
   headers = {cookie = "nxgmnmry=22b1144258bb2b3c"}
-  title = ""
   [[websites.content]]
     name = "div"
     attrs = {class = "TxtContent"}
@@ -151,7 +138,6 @@
     
 [[websites]]
   url = "m.176xsw.com"
-  title = ""
   [[websites.content]]
     name = "div"
     attrs = {class = "readcontent"}
@@ -161,7 +147,6 @@
     
 [[websites]]
   url = "e-hentai.org"
-  title = ""
   [[websites.content]]
     name = "img"
     attrs = {id = "img"}
@@ -172,7 +157,6 @@
     
 [[websites]]
   url = "m.k886.net"
-  title = ""
   [[websites.content]]
     name = "img"
     attrs = {alt = true, height = false}
@@ -185,8 +169,7 @@
     string = "下一章"
     
 [[websites]]
-  url = "raws.mangazuki.co"
-  title = "title"
+  url = "raws.mangazuki.co"  
   [[websites.content]]
     name = "img"
     attrs = {class = "img-responsive", data-src = true}
@@ -196,7 +179,6 @@
     
 [[websites]]
   url = "www.177pic.info"
-  title = ""
   [[websites.content]]
     name = "img"
     attrs = {class = true}
@@ -207,7 +189,6 @@
     
 [[websites]]
   url = "manhwahand.com"
-  title = ""
   [[websites.content]]
     name = "img"
     attrs = {class = true, id = true}
@@ -218,7 +199,6 @@
     
 [[websites]]
   url = "nhentai.net"
-  title = ""
   [[websites.content]]
     name = "img"
     attrs = {class = true}
@@ -231,7 +211,8 @@
 [[websites]]
   url = "."
   encoding = "utf-8"
-  title = ""
+  [websites.title]
+    name = "title"
   [[websites.content]]
     name = "p"
     attrs = {class = false}
