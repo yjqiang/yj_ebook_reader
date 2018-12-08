@@ -112,7 +112,7 @@ class Reader:
         self.contents = []
         # (l, r, name)
         self.titles = []
-        self.var_ebook_loader.set_url(url)
+        self.var_ebook_loader.init_url(url)
         self.load_chapter(True)
         sum_num_lines = self.add2contents()
         # 其实应该仿照img模块的，但是没必要，白白把逻辑弄麻烦了
@@ -162,7 +162,7 @@ class Reader:
         
         content_size = scrollview.content_size[1]
         # 预加载
-        if content_size and content_size - self.cur_offset <= 3.5 * reader_h:
+        if content_size and content_size - self.cur_offset <= 5 * reader_h:
             self.load_chapter_bg()
         
         # 滚动条下移

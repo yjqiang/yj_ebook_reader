@@ -7,19 +7,11 @@ from e_loader.e_loader import ELoader
 
 
 class EBookLoader(ELoader):
-    def set_url(self, url):
-        self.url = url
-        for i in self.dict_conf['websites']:
-            if i['url'] in url:
-                self.conf = i
-                break
-        else:
-            self.conf = None
-        self.encoding_with_captcha()
-        self.contents = self.get_content()
-        self.cur_offset = 0
-        
     def get_one_chapter(self):
+        if self.cur_offset is None:
+            self.encoding_with_captcha()
+            self.contents = self.get_content()
+            self.cur_offset = 0
         if self.cur_offset > 0:
             if not self.get_url2next():
                 return None, None, None
@@ -35,7 +27,6 @@ class EBookLoader(ELoader):
         return words, title, self.url
 
     def get_content(self):
-        rules = self.conf['content']
         labels = super().get_content()
         words = []
         for i in labels:

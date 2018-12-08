@@ -15,7 +15,7 @@ class ELoader:
         # 'url': text
         self.cache = {}
 
-    def reset_url(self, url):
+    def init_url(self, url):
         self.url = url
         for i in self.dict_conf['websites']:
             if i['url'] in url:
@@ -23,6 +23,7 @@ class ELoader:
                 break
         else:
             self.conf = None
+        self.cur_offset = None
         
     def get_rule(self, dict_rule, def_key=None, def_name=None):
         name = dict_rule.get('name', def_name)

@@ -106,7 +106,7 @@ class Reader:
         self.contents = []
         # (l, r, name)
         self.titles = []
-        self.var_ebook_loader.set_url(url)
+        self.var_ebook_loader.init_url(url)
         self.load_img(True)
         self.add2contents()
         # 条件应该是把一页填充满而且书签模式下尽量加载
@@ -168,7 +168,7 @@ class Reader:
         
         content_size = scrollview.content_size[1]
         # 预加载
-        if content_size and content_size - self.cur_offset <= 3.5 * reader_h:
+        if content_size and content_size - self.cur_offset <= 4 * reader_h:
             self.load_img_bg()
             
         # 滚动条下移
