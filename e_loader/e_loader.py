@@ -43,10 +43,10 @@ class ELoader:
                 return self.url
             name, attrs, string = self.get_criteria(next_tag)
             # print(text)
-            results = self.soups.find_all(name, attrs=attrs, string=string)
+            result = self.soups.find(name, attrs=attrs, string=string)
             # print(results)
-            if results:
-                link = results[0]['href']
+            if result:
+                link = result['href']
                 # print(results)
                 # 防止j s (此时一般就是没了)
                 if '/' in link or '.' in link:
