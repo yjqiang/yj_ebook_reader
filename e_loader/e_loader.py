@@ -24,12 +24,13 @@ class ELoader:
         else:
             self.conf = None
         
-    def get_criteria(self, dict_criteria):
-        name = dict_criteria.get('name', None)
-        attrs = dict_criteria.get('attrs', {})
-        string_pattern = dict_criteria.get('string', None)
+    def get_rule(self, dict_rule, default_key=None):
+        name = dict_rule.get('name', None)
+        attrs = dict_rule.get('attrs', {})
+        string_pattern = dict_rule.get('string', None)
         string = None if string_pattern is None else re.compile(string_pattern)
-        return name, attrs, string
+        key = dict_rule.get('key', default_key)
+        return name, attrs, string, key
 
     def get_url2next(self):
         next_tags = self.conf['next']
@@ -41,12 +42,12 @@ class ELoader:
                 self.url = urljoin(self.url, result.group(1))
                 print(self.url)
                 return True
-            name, attrs, string = self.get_criteria(next_tag)
+            name, attrs, string, key = self.get_rule(next_tag, 'href')
             # print(text)
             result = self.soups.find(name, attrs=attrs, string=string)
             # print(results)
             if result:
-                link = result['href']
+                link = result[key]
                 # print(results)
                 # 防止j s (此时一般就是没了)
                 if '/' in link or '.' in link:
