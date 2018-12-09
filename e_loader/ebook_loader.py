@@ -27,7 +27,12 @@ class EBookLoader(ELoader):
         return words, title, self.url
 
     def get_content(self):
-        labels = super().get_content()
+        rules = self.conf['content']
+        labels = []
+        for rule in rules:
+            name, attrs, string, _ = self.get_rule(rule)
+            
+            labels += self.soups.find_all(name, attrs=attrs, string=string)
         words = []
         for i in labels:
             for row in i.childGenerator():
