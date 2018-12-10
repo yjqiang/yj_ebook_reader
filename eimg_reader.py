@@ -39,8 +39,8 @@ class Reader:
         self.init_subviews(url)
         
     def load_img(self, init=False):
-        imgs, title, url = self.var_ebook_loader.get_next_bodydata()
-        self.queue.put((imgs, title, url, init))
+        data = self.var_ebook_loader.get_next_bodydata()
+        self.queue.put((*data, init))
         
     def check_title(self):
         off_set = self.cur_offset
@@ -150,6 +150,28 @@ class Reader:
         scrollview.content_offset = (0, h+j)
         self.check_title()
         
+    def get_offset(self):
+        scrollview = self.scrollview
+        off_set = scrollview.content_offset.y
+        i = None
+        for item in self.items:
+            if item.y + item.height >= off_set:
+                i = item.i
+                j = off_set - item.y
+                break
+        if i is None:
+            return
+        for l, r, name, url in self.titles:
+            if l <= i < r:
+                # 本页的i 相对段落数目
+                new_bookmark = {
+                    'i': i - l,
+                    'j': int(j),
+                    'url': url,
+                    'title': name
+                }
+                return new_bookmark
+                
     def reset_scrollbar(self):
         scrollview = self.scrollview
         offset_x, offset_y = scrollview.content_offset
@@ -248,26 +270,7 @@ class BMTableViewer:
         # nav_view.right_button_items = main_button_items
                     
     def save_bm(self, sender):
-        scrollview = self.reader.scrollview
-        off_set = scrollview.content_offset.y
-        i = None
-        for item in self.reader.items:
-            if item.y + item.height >= off_set:
-                i = item.i
-                j = off_set - item.y
-                break
-        if i is None:
-            return
-        for l, r, name, url in self.reader.titles:
-            if l <= i < r:
-                # 本页的i 相对段落数目
-                new_bookmark = {
-                    'i': i - l,
-                    'j': int(j),
-                    'url': url,
-                    'title': name
-                }
-                # print(new_bookmark)
+        new_bookmark = self.reader.get_offset()
                         
         is_duplicated = conf_loader.check_bookmark(new_bookmark)
         
