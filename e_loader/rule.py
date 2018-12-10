@@ -91,7 +91,7 @@ class WebsiteRule:
         self.headers = {**self.ori_headers, **conf.get('headers', {})}
         self.body_rule.set_rule(conf['body'])
         self.index_rule.set_rule(conf.get('index', None))
-        self.print_rule()
+        # self.print_rule()
         
     def print_rule(self):
         print('url', self.url)
