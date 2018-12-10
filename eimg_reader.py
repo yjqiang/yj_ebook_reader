@@ -28,11 +28,10 @@ class Reader:
     LOADING = Image.named('iob:load_d_32')
     LOADING_HEIGHT = WIDTH_LINE / LOADING.size.x * LOADING.size.y
         
-    def __init__(self, scrollview, tableview):
+    def __init__(self, scrollview):
         self.var_ebook_loader = EImgLoader(dict_conf)
         self.has_sent_req = False
         self.scrollview = scrollview
-        self.tableview = tableview
         self.queue = Queue()
         self.items = deque(self.scrollview.subviews)
         assert (len(self.items) - 1) * self.ITEM_H > scrollview.height
@@ -258,8 +257,9 @@ class Reader:
         
 
 class BMTableViewer:
-    def __init__(self, reader):
+    def __init__(self, reader, tableview):
         self.reader = reader
+        self.tableview = tableview
         
     def tableview_did_select(self, tableview, section, row):
         bm = tableview.data_source.items[row]
@@ -275,8 +275,8 @@ class BMTableViewer:
         is_duplicated = conf_loader.check_bookmark(new_bookmark)
         
         if not is_duplicated:
-            self.reader.tableview.data_source.items.append(new_bookmark)
-            conf_loader.refresh_file(self.reader.tableview.data_source)
+            self.tableview.data_source.items.append(new_bookmark)
+            conf_loader.refresh_file(self.tableview.data_source)
             console.hud_alert(f'已经保存')
         else:
             console.hud_alert('重复操作')
@@ -296,8 +296,8 @@ for i in range(9):
     # print(reader_view[f'imageview{i}'])
     sc.add_subview(reader_view[f'imageview{i}'])
 
-var_reader = Reader(sc, tb)
-var_bm_table_viewer = BMTableViewer(var_reader)
+var_reader = Reader(sc)
+var_bm_table_viewer = BMTableViewer(var_reader, tb)
 
 sc.delegate = var_reader
 tb.delegate = var_bm_table_viewer
