@@ -1,86 +1,46 @@
-import re
-from urllib.parse import urljoin
-import web
-from bs4 import BeautifulSoup
+from .ebody_loader import EBookBodyLoader, EImgBodyLoader
+from .eindex_loader import EIndexLoader
+from .rule import WebsiteRule
 
 
-class ELoader:
-    def __init__(self, dict_conf):
-        self.dict_conf = dict_conf
-        user_agent = ('Mozilla/5.0 (iPhone; CPU iPhone OS 11_2_6 like'
-                      'Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko)'
-                      'CriOS/65.0.3325.152 Mobile/15D100 Safari/604.1')
-
-        self.headers = {'User-Agent': user_agent}
-        # 'url': text
+class EBookLoader:
+    def __init__(self, list_confs):
+        self.list_confs = list_confs
         self.cache = {}
-
-    def init_url(self, url):
+        rule = WebsiteRule()
+        
+        self.body_loader = EBookBodyLoader(self.cache, rule.body_rule, rule)
+        self.index_loader = EIndexLoader(self.cache, rule.index_rule, rule)
+        self.rule = rule
+                
+    def set_url(self, url):
         self.url = url
-        for i in self.dict_conf['websites']:
+        for i in self.list_confs['websites']:
             if i['url'] in url:
-                self.conf = i
+                conf = i
                 break
         else:
-            self.conf = None
-        self.cur_offset = None
+            conf = None
         
-    def get_rule(self, dict_rule, def_key=None, def_name=None):
-        name = dict_rule.get('name', def_name)
-        attrs = dict_rule.get('attrs', {})
-        string_pattern = dict_rule.get('string', None)
-        string = None if string_pattern is None else re.compile(string_pattern)
-        key = dict_rule.get('key', def_key)
-        return name, attrs, string, key
-
-    def get_url2next(self):
-        rules = self.conf['next']
-        for rule in rules:
-            if 're_body' in rule:
-                result = re.search(rule['re_body'], self.text)
-                if result is None:
-                    return False
-                self.url = urljoin(self.url, result.group(1))
-                print(self.url)
-                return True
-            name, attrs, string, key = self.get_rule(rule, 'href')
-            # print(text)
-            result = self.soups.find(name, attrs=attrs, string=string)
-            # print(results)
-            if result is not None:
-                link = result[key]
-                # print(results)
-                # 防止j s (此时一般就是没了)
-                if '/' in link or '.' in link:
-                    self.url = urljoin(self.url, link)
-                    return True
-        return False
-
-    def encoding_page(self, url=None):
-        if url is None:
-            url = self.url
-        headers = {**self.headers, **self.conf.get('headers', {})}
-        if url in self.cache:
-            text, encoding = self.cache[url]
-            soups = BeautifulSoup(text, 'html.parser')
-            self.encoding = encoding
-            self.soups = soups
-            self.text = text
-            return soups
-        rsp = web.get(url, headers=headers)
-        rsp.encoding = self.conf.get('encoding', rsp.encoding)
-        self.encoding = rsp.encoding
-        text = rsp.text
-        soups = BeautifulSoup(text, 'html.parser')
-        # print(soups.prettify())
-        self.cache[url] = (text, self.encoding)
-        self.text = text
-        self.soups = soups
-        return soups
-    
-    def get_title(self):
-        rule = self.conf.get('title', {})
-        # print(title_conf)
-        name, attrs, string, _ = self.get_rule(rule, def_name='title')
-        title = self.soups.find(name, attrs=attrs, string=string).string
-        return str(title).strip()
+        self.rule.set_rule(conf)
+        self.body_loader.set_url(url)
+        index_url = self.body_loader.get_index_url()
+        self.index_loader.set_url(index_url)
+        
+    def get_next_bodydata(self):
+        return self.body_loader.get_next_data()
+        
+    def get_next_indexdata(self):
+        return self.index_loader.get_next_data()
+                
+            
+class EImgLoader(EBookLoader):
+    def __init__(self, list_confs):
+        self.list_confs = list_confs
+        self.cache = {}
+        rule = WebsiteRule()
+        
+        self.body_loader = EImgBodyLoader(self.cache, rule.body_rule, rule)
+        self.index_loader = EIndexLoader(self.cache, rule.index_rule, rule)
+        self.rule = rule
+        

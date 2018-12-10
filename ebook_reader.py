@@ -5,7 +5,7 @@ import ui
 import console
 from ui import Image
 from config_loader import ConfigLoader
-from e_loader.ebook_loader import EBookLoader
+from e_loader.e_loader import EBookLoader
 
 
 url = 'http://quanben-xiaoshuo.com/n/wuxiashijiedachuanyue/7.html'
@@ -26,7 +26,7 @@ url = 'http://quanben-xiaoshuo.com/n/wuxiashijiedachuanyue/7.html'
 # url = 'https://m.snwx8.com/book/210/210159/45857682.html'
 # url = 'http://www.xitxt.net/read/19533_12.html'
 # url = 'https://www.piaotian.com/html/9/9275/6863827.html'
-url = 'http://m.176xsw.com/7/111/read/99575.html'
+# url = 'http://m.176xsw.com/7/111/read/99575.html'
 
 conf_loader = ConfigLoader()
 
@@ -50,7 +50,7 @@ class Reader:
         self.init_subviews(url)
         
     def load_chapter(self, init=False):
-        chapter, title, url = self.var_ebook_loader.get_one_chapter()
+        chapter, title, url = self.var_ebook_loader.get_next_bodydata()
         self.queue.put((chapter, title, url, init))
         # print('执行')
         
@@ -112,7 +112,7 @@ class Reader:
         self.contents = []
         # (l, r, name)
         self.titles = []
-        self.var_ebook_loader.init_url(url)
+        self.var_ebook_loader.set_url(url)
         self.load_chapter(True)
         sum_num_lines = self.add2contents()
         # 其实应该仿照img模块的，但是没必要，白白把逻辑弄麻烦了

@@ -6,7 +6,7 @@ import ui
 import console
 from ui import Image
 from config_loader import ConfigLoader
-from e_loader.eimg_loader import EImgLoader
+from e_loader.e_loader import EImgLoader
 
 
 url = 'https://e-hentai.org/s/9962198a63/1300988-2'
@@ -39,7 +39,7 @@ class Reader:
         self.init_subviews(url)
         
     def load_img(self, init=False):
-        imgs, title, url = self.var_ebook_loader.get_one_img()
+        imgs, title, url = self.var_ebook_loader.get_next_bodydata()
         self.queue.put((imgs, title, url, init))
         
     def check_title(self):
@@ -106,7 +106,7 @@ class Reader:
         self.contents = []
         # (l, r, name)
         self.titles = []
-        self.var_ebook_loader.init_url(url)
+        self.var_ebook_loader.set_url(url)
         self.load_img(True)
         self.add2contents()
         # 条件应该是把一页填充满而且书签模式下尽量加载
