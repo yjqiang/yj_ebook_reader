@@ -36,6 +36,13 @@
   [[websites.body.next]]
     name = 'a'
     attrs = {rel = "next"}
+  [websites.body.index]
+    name = "a"
+    attrs = {rel = "contents"}
+  [[websites.index.content]]
+    name = "a"
+    attrs={itemprop = "url", class = false}
+    key = "href"
   
 [[websites]]
   # 这货有func但是错误的mmp
@@ -210,6 +217,15 @@
     name = "img"
     attrs = {class = true}
     key = "src"
+  [[websites.body.next]]
+    name = 'a'
+    attrs = {class = "next"}
+    
+[[websites]]
+  url = "mangapark.me"
+  [[websites.body.content]]
+    name = "img"
+    attrs = {class = "img"}
   [[websites.body.next]]
     name = 'a'
     attrs = {class = "next"}

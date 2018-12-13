@@ -99,7 +99,7 @@ class EImgBodyLoader(BodyLoader):
             attrs = rule['attrs']
             string = rule['string']
             labels = self.soups.find_all(name, attrs=attrs, string=string)
-            urls += [i[rule['key']] for i in labels]
+            urls += [urljoin(self.url, i[rule['key']]) for i in labels]
         
         return urls
                 

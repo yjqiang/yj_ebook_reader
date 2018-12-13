@@ -13,8 +13,9 @@ url = 'https://e-hentai.org/s/9962198a63/1300988-2'
 url = 'https://m.k886.net/look/name/SuperDick/cid/36391/id/339212/p/2'
 # url = 'https://raws.mangazuki.co/manga/desire-king/81'
 # url = 'http://www.177pic.info/html/2018/04/1999461.html/19'
-# url = 'https://manhwahand.com/manhwa/desire-king/chapter-30?style=list'
+url = 'https://manhwahand.com/manhwa/desire-king/chapter-30?style=list'
 # url = 'https://nhentai.net/g/249922/2/'
+# url = 'https://mangapark.me/manga/love-parameter-kkun/s1/c104/2'
 
 conf_loader = ConfigLoader()
 
@@ -188,8 +189,10 @@ class Reader:
         # print('t')
         
         content_size = scrollview.content_size[1]
+        if not content_size:
+            return
         # 预加载
-        if content_size and content_size - self.cur_offset <= 4 * reader_h:
+        if content_size - self.cur_offset <= 4 * reader_h:
             self.load_img_bg()
             
         # 滚动条下移
