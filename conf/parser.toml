@@ -230,6 +230,14 @@
     name = 'a'
     attrs = {class = "next"}
     
+[[websites]]
+  url = "taadd.com"  
+  [[websites.body.content]]
+    name = "img"
+    attrs = {id = "image"}
+  [[websites.body.next]]
+    re_body = "next_page = \"(.+)\""
+    
 # 可以认为这是个default设置
 [[websites]]
   url = "."
