@@ -238,6 +238,16 @@
   [[websites.body.next]]
     re_body = "next_page = \"(.+)\""
     
+[[websites]]
+  url = "original-work.simply-hentai.com"
+  [[websites.body.content]]
+    name = "source"
+    attrs = {media = "(min-width: 1050px)"}
+    key = "srcset"
+  [[websites.body.next]]
+    name = 'a'
+    string = "Next"
+    
 # 可以认为这是个default设置
 [[websites]]
   url = "."
