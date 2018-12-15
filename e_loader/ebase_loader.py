@@ -48,7 +48,7 @@ class EPageLoader:
                 link = result[rule['key']]
                 # print(results)
                 # 防止j s (此时一般就是没了)
-                if '/' in link or '.' in link:
+                if 'javascript' not in link and link != '#':
                     self.url = urljoin(self.url, link)
                     return True
         return False
