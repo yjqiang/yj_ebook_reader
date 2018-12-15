@@ -160,6 +160,15 @@
     string = "下一"  
     
 [[websites]]
+  url = "novel.zhwenpg.com"
+  [[websites.body.content]]
+    name = "span"
+    attrs = {class = "content"}
+  [[websites.body.next]]
+    name = 'a'
+    string = "下一"
+    
+[[websites]]
   url = "e-hentai.org"
   [[websites.body.content]]
     name = "img"
