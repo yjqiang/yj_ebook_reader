@@ -79,7 +79,7 @@ class EPageLoader:
             if '服务器安全狗防护验证页面' in title:
                 console.hud_alert('验证')
                 js = self.soups.find('script').string
-                link = re.findall(re_safe_dog, js)[0]
+                link = re_safe_dog.search(js).group(1)
                 self.url = urljoin(self.url, link)
                 # print(link)
             else:
