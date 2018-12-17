@@ -32,8 +32,8 @@ class EPageLoader:
         if rules is None:
             return False
         for rule in rules:
-            if 're_body' in rule:
-                result = re.search(rule['re_body'], self.text)
+            if 're' in rule:
+                result = rule['re'].search(self.text)
                 if result is None:
                     return False
                 self.url = urljoin(self.url, result.group(1))

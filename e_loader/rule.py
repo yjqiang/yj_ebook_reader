@@ -3,10 +3,10 @@ import re
 
 class PageRule:
     def get_rule(self, dict_rule, def_key=None, def_name=None):
-        re_body = dict_rule.get('re_body', None)
+        re_body = dict_rule.get('re', None)
         if re_body is not None:
             result = {
-                're_body': re_body
+                're': re.compile(re_body)
             }
         else:
             name = dict_rule.get('name', def_name)

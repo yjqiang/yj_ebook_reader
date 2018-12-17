@@ -198,7 +198,7 @@
     attrs = {class = "img-responsive", data-src = true}
     key = "data-src"
   [[websites.body.next]]
-    re_body = "var[ ]*next_chapter[^;]+\"(.+)\""
+    re = "var[ ]*next_chapter[^;]+\"(.+)\""
     
 [[websites]]
   url = "www.177pic.info"
@@ -245,7 +245,7 @@
     name = "img"
     attrs = {id = "image"}
   [[websites.body.next]]
-    re_body = "next_page = \"(.+)\""
+    re = "next_page = \"(.+)\""
     
 [[websites]]
   url = "original-work.simply-hentai.com"
