@@ -35,6 +35,9 @@ class EBookBodyLoader(BodyLoader):
             self.fetch_page_with_captcha()
             self.contents = self.get_content()
             self.cur_offset = 0
+            
+        if not self.contents:
+            return None, None, None
         words = self.contents
         title = self.title
         words = [zh_st.t2s(line) for line in words]
@@ -81,6 +84,8 @@ class EImgBodyLoader(BodyLoader):
             self.contents = self.get_content()
             self.title = self.get_title()
             self.cur_offset = 0
+        if not self.contents:
+            return None, None, None
         
         img_url = self.contents[self.cur_offset]
         if img_url in self.cache:
