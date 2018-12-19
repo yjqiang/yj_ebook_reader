@@ -1,6 +1,6 @@
 from .ebody_loader import EBookBodyLoader, EImgBodyLoader
 from .eindex_loader import EIndexLoader
-from .rule import WebsiteRule
+from rule.rule import WebsiteRule
 
 
 class EBookLoader:
