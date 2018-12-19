@@ -60,6 +60,7 @@ class BodyRule(PageRule):
                 
 class IndexRule(PageRule):
     def set_rule(self, conf):
+        # 没有rule的里面一定没有body.index参数，所以无所谓
         if conf is None:
             return
         self.set_title_rule(conf)
@@ -83,12 +84,3 @@ class WebsiteRule:
         self.headers = {**self.ori_headers, **conf.get('headers', {})}
         self.body_rule.set_rule(conf['body'])
         self.index_rule.set_rule(conf.get('index', None))
-        
-    def print_rule(self):
-        print('url', self.url)
-        print('encoding', self.encoding)
-        print('body.title', self.body_rule.title)
-        print('body.content', self.body_rule.content)
-        print('body.next', self.body_rule.next)
-        print('body.index', self.body_rule.index)
-        
