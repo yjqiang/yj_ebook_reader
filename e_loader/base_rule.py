@@ -52,7 +52,6 @@ class TagRule:
         
     def find_attr(self, text, soup, with_string=False):
         result = self._find(soup)
-        print(result, self.attr)
         if result is None:
             return None
         if not with_string:
@@ -63,7 +62,7 @@ class TagRule:
         results = self._findall(soup)
         if not with_string:
             return results
-        return [result.string for result in results]        
+        return [result.string for result in results]
         
     def findall_attr(self, text, soup, with_string=False):
         results = self._findall(soup)
