@@ -257,6 +257,14 @@
     name = 'a'
     string = "Next"
     
+[[websites]]
+  url = "manganelo.com"
+  [[websites.body.content]]
+    css_selector = "img[src$=\"jpg\"]"
+  [[websites.body.next]]
+    name = 'a'
+    attrs = {class = "back"}
+    
 # 可以认为这是个default设置
 [[websites]]
   url = "."

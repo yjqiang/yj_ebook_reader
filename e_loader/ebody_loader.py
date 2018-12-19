@@ -14,12 +14,8 @@ class BodyLoader(EPageLoader):
             return None
         else:
             self.fetch_page_with_captcha()
-            name = rule['name']
-            attrs = rule['attrs']
-            string = rule['string']
-            tag = self.soups.find(name, attrs=attrs, string=string)
-            url = urljoin(self.url, tag[rule['key']])
-            # print(url)
+            result = rule.find_attr(self.text, self.soups)
+            url = urljoin(self.url, result.strip())
             return url
                         
 
@@ -49,11 +45,8 @@ class EBookBodyLoader(BodyLoader):
         rules = self.rule.content
         labels = []
         for rule in rules:
-            name = rule['name']
-            attrs = rule['attrs']
-            string = rule['string']
-            
-            labels += self.soups.find_all(name, attrs=attrs, string=string)
+            # 其实这里默认了不能re
+            labels += rule.findall_raw(self.text, self.soups)
         words = []
         for i in labels:
             for row in i.childGenerator():
@@ -100,11 +93,8 @@ class EImgBodyLoader(BodyLoader):
         rules = self.rule.content
         urls = []
         for rule in rules:
-            name = rule['name']
-            attrs = rule['attrs']
-            string = rule['string']
-            labels = self.soups.find_all(name, attrs=attrs, string=string)
-            urls += [urljoin(self.url, i[rule['key']].strip()) for i in labels]
+            results = rule.findall_attr(self.text, self.soups)
+            urls += [urljoin(self.url, result.strip()) for result in results]
         
         return urls
                 

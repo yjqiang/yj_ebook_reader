@@ -1,33 +1,25 @@
 import re
+from .base_rule import ReRule, CssSelectorRule, BsRule
         
-
+        
 class PageRule:
     def get_rule(self, dict_rule, def_key=None, def_name=None):
-        re_body = dict_rule.get('re', None)
-        if re_body is not None:
-            result = {
-                're': re.compile(re_body)
-            }
+        if 're' in dict_rule:
+            string = re.compile(dict_rule['re'])
+            return ReRule(string)
+        elif 'css_selector' in dict_rule:
+            css_selector = dict_rule['css_selector']
+            attr = dict_rule.get('key', def_key)
+            return CssSelectorRule(css_selector, attr)
         else:
             name = dict_rule.get('name', def_name)
-            
             attrs = dict_rule.get('attrs', {})
-            
-            string_pattern = dict_rule.get('string', None)
-            if string_pattern is None:
-                string = None
+            if 'string' in dict_rule:
+                string = re.compile(dict_rule['string'])
             else:
-                string = re.compile(string_pattern)
-                
-            key = dict_rule.get('key', def_key)
-            
-            result = {
-                'name': name,
-                'attrs': attrs,
-                'string': string,
-                'key': key
-            }
-        return result
+                string = None
+            attr = dict_rule.get('key', def_key)
+            return BsRule(name, attrs, string, attr)
         
     def set_title_rule(self, conf):
         dict_rule = conf.get('title', {})
@@ -91,7 +83,6 @@ class WebsiteRule:
         self.headers = {**self.ori_headers, **conf.get('headers', {})}
         self.body_rule.set_rule(conf['body'])
         self.index_rule.set_rule(conf.get('index', None))
-        # self.print_rule()
         
     def print_rule(self):
         print('url', self.url)

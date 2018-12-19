@@ -32,10 +32,6 @@ class EIndexLoader(EPageLoader):
         rules = self.rule.content
         contents = []
         for rule in rules:
-            name = rule['name']
-            attrs = rule['attrs']
-            string = rule['string']
-            key = rule['key']
-            labels = self.soups.find_all(name, attrs=attrs, string=string)
-            contents += [(i[key], i.string) for i in labels]
+            results = rule.findall_attr(self.text, self.soups, with_string=True)
+            contents += results
         return contents

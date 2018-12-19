@@ -18,10 +18,7 @@ class EPageLoader:
         
     def get_title(self):
         rule = self.rule.title
-        name = rule['name']
-        attrs = rule['attrs']
-        string = rule['string']
-        title = self.soups.find(name, attrs=attrs, string=string).string
+        title = rule.find_raw(self.text, self.soups, with_string=True)
         return str(title).strip()
         
     def get_content(self):
@@ -32,25 +29,11 @@ class EPageLoader:
         if rules is None:
             return False
         for rule in rules:
-            if 're' in rule:
-                result = rule['re'].search(self.text)
-                if result is None:
-                    return False
-                self.url = urljoin(self.url, result.group(1))
+            link = rule.find_attr(self.text, self.soups)
+            # 防止j s (此时一般就是没了)
+            if 'javascript' not in link and link != '#':
+                self.url = urljoin(self.url, link)
                 return True
-            name = rule['name']
-            attrs = rule['attrs']
-            string = rule['string']
-            # print(text)
-            result = self.soups.find(name, attrs=attrs, string=string)
-            # print(results)
-            if result is not None:
-                link = result[rule['key']]
-                # print(results)
-                # 防止j s (此时一般就是没了)
-                if 'javascript' not in link and link != '#':
-                    self.url = urljoin(self.url, link)
-                    return True
         return False
 
     def fetch_page(self):
