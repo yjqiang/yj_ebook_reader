@@ -265,6 +265,15 @@
     name = 'a'
     attrs = {class = "back"}
     
+[[websites]]
+  url = "www.wnacg.org"
+  [[websites.body.content]]
+    name = "img"
+    attrs = {class = "photo"}
+  [[websites.body.next]]
+    name = 'a'
+    attrs = {class = "btnnext"}
+    
 # 可以认为这是个default设置
 [[websites]]
   url = "."
