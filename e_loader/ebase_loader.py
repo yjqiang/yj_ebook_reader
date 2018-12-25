@@ -31,7 +31,7 @@ class EPageLoader:
         for rule in rules:
             link = rule.find_attr(self.text, self.soups)
             # 防止j s (此时一般就是没了)
-            if 'javascript' not in link and link != '#':
+            if link is not None and 'javascript' not in link and link != '#':
                 self.url = urljoin(self.url, link)
                 return True
         return False

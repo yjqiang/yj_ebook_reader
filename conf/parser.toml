@@ -169,6 +169,13 @@
     string = "下一"
     
 [[websites]]
+  url = "www.quanben.io"
+  [[websites.body.content]]
+    css_selector = "div[class=\"articlebody\"]"
+  [[websites.body.next]]
+    css_selector = "a[rel=\"next\"]"
+    
+[[websites]]
   url = "e-hentai.org"
   [[websites.body.content]]
     name = "img"
