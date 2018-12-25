@@ -22,42 +22,6 @@
         "nodes" : [
 
         ],
-        "frame" : "{{21, 543}, {89, 32}}",
-        "class" : "Button",
-        "attributes" : {
-          "image_name" : "iob:bookmark_24",
-          "frame" : "{{143, 272}, {80, 32}}",
-          "title" : "保存书签",
-          "uuid" : "A9960838-27A7-4F09-B167-0E69DEB9017C",
-          "font_bold" : true,
-          "class" : "Button",
-          "background_color" : "RGBA(0.835294,1.000000,0.835294,1.000000)",
-          "name" : "button_save_bm",
-          "font_size" : 15
-        },
-        "selected" : false
-      },
-      {
-        "nodes" : [
-
-        ],
-        "frame" : "{{158, 543}, {89, 32}}",
-        "class" : "Button",
-        "attributes" : {
-          "frame" : "{{143, 272}, {80, 32}}",
-          "title" : "查看书签",
-          "uuid" : "A91A032B-BDAD-4B7A-9BB5-D26EB3BC79CF",
-          "background_color" : "RGBA(0.791667,1.000000,0.851190,1.000000)",
-          "class" : "Button",
-          "name" : "button_show_bm",
-          "font_size" : 15
-        },
-        "selected" : false
-      },
-      {
-        "nodes" : [
-
-        ],
         "frame" : "{{0, 0}, {337, 70}}",
         "class" : "ImageView",
         "attributes" : {

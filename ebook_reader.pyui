@@ -26,13 +26,13 @@
         "class" : "Label",
         "attributes" : {
           "name" : "label0",
-          "custom_attributes" : "{\"i\": 0, \"j\": 0}",
+          "class" : "Label",
           "frame" : "{{85, 224}, {150, 32}}",
+          "custom_attributes" : "{\"i\": 0, \"j\": 0}",
+          "number_of_lines" : 1,
+          "alignment" : "left",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "text" : "Label0",
-          "class" : "Label",
-          "alignment" : "left",
-          "number_of_lines" : 1,
           "font_size" : 18,
           "font_name" : "<System>"
         },
@@ -52,8 +52,8 @@
           "alignment" : "left",
           "text" : "Label1",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "name" : "label1",
-          "font_size" : 18
+          "font_size" : 18,
+          "name" : "label1"
         },
         "selected" : false
       },
@@ -71,8 +71,8 @@
           "alignment" : "left",
           "text" : "Label2",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "name" : "label2",
-          "font_size" : 18
+          "font_size" : 18,
+          "name" : "label2"
         },
         "selected" : false
       },
@@ -90,8 +90,8 @@
           "alignment" : "left",
           "text" : "Label3",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "name" : "label3",
-          "font_size" : 18
+          "font_size" : 18,
+          "name" : "label3"
         },
         "selected" : false
       },
@@ -102,14 +102,14 @@
         "frame" : "{{6, 134}, {360, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 18,
+          "name" : "label4",
           "frame" : "{{85, 224}, {150, 32}}",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label4",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "name" : "label4",
+          "font_size" : 18,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -121,14 +121,14 @@
         "frame" : "{{6, 166}, {360, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 18,
+          "name" : "label5",
           "frame" : "{{85, 224}, {150, 32}}",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label5",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "name" : "label5",
+          "font_size" : 18,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -140,14 +140,14 @@
         "frame" : "{{6, 230}, {360, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 18,
+          "name" : "label7",
           "frame" : "{{85, 224}, {150, 32}}",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label7",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "name" : "label7",
+          "font_size" : 18,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -159,14 +159,14 @@
         "frame" : "{{6, 262}, {360, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 18,
+          "name" : "label8",
           "frame" : "{{85, 224}, {150, 32}}",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label8",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "name" : "label8",
+          "font_size" : 18,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -185,8 +185,8 @@
           "alignment" : "left",
           "text" : "Label9",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "font_size" : 18,
-          "name" : "label9"
+          "name" : "label9",
+          "font_size" : 18
         },
         "selected" : false
       },
@@ -204,8 +204,8 @@
           "alignment" : "left",
           "text" : "Label10",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "font_size" : 18,
-          "name" : "label10"
+          "name" : "label10",
+          "font_size" : 18
         },
         "selected" : false
       },
@@ -223,8 +223,8 @@
           "alignment" : "left",
           "text" : "Label11",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "font_size" : 18,
-          "name" : "label11"
+          "name" : "label11",
+          "font_size" : 18
         },
         "selected" : false
       },
@@ -242,8 +242,8 @@
           "alignment" : "left",
           "text" : "Label12",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "font_size" : 18,
-          "name" : "label12"
+          "name" : "label12",
+          "font_size" : 18
         },
         "selected" : false
       },
@@ -261,8 +261,8 @@
           "alignment" : "left",
           "text" : "Label13",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "font_size" : 18,
-          "name" : "label13"
+          "name" : "label13",
+          "font_size" : 18
         },
         "selected" : false
       },
@@ -273,14 +273,14 @@
         "frame" : "{{6, 454}, {360, 32}}",
         "class" : "Label",
         "attributes" : {
-          "name" : "label14",
+          "font_size" : 18,
           "frame" : "{{85, 224}, {150, 32}}",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label14",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "font_size" : 18,
+          "name" : "label14",
           "font_name" : "<System>"
         },
         "selected" : false
@@ -292,14 +292,14 @@
         "frame" : "{{6, 486}, {360, 32}}",
         "class" : "Label",
         "attributes" : {
-          "name" : "label15",
+          "font_size" : 18,
           "frame" : "{{85, 224}, {150, 32}}",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label15",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "font_size" : 18,
+          "name" : "label15",
           "font_name" : "<System>"
         },
         "selected" : false
@@ -311,14 +311,14 @@
         "frame" : "{{6, 550}, {360, 32}}",
         "class" : "Label",
         "attributes" : {
-          "name" : "label17",
+          "font_size" : 18,
           "frame" : "{{85, 224}, {150, 32}}",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label17",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "font_size" : 18,
+          "name" : "label17",
           "font_name" : "<System>"
         },
         "selected" : false
@@ -330,14 +330,14 @@
         "frame" : "{{6, 518}, {360, 32}}",
         "class" : "Label",
         "attributes" : {
-          "name" : "label16",
+          "font_size" : 18,
           "frame" : "{{85, 224}, {150, 32}}",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label16",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "font_size" : 18,
+          "name" : "label16",
           "font_name" : "<System>"
         },
         "selected" : false
@@ -349,14 +349,14 @@
         "frame" : "{{6, 198}, {360, 32}}",
         "class" : "Label",
         "attributes" : {
-          "font_size" : 18,
+          "name" : "label6",
           "frame" : "{{85, 224}, {150, 32}}",
           "uuid" : "58547B3C-C156-4EC2-A02B-E1D547C8818A",
           "class" : "Label",
           "alignment" : "left",
           "text" : "Label6",
           "custom_attributes" : "{\"i\": 0, \"j\": 0}",
-          "name" : "label6",
+          "font_size" : 18,
           "font_name" : "<System>"
         },
         "selected" : false
@@ -365,35 +365,17 @@
         "nodes" : [
 
         ],
-        "frame" : "{{21, 543}, {89, 32}}",
-        "class" : "Button",
+        "frame" : "{{6, 582}, {360, 32}}",
+        "class" : "Label",
         "attributes" : {
-          "image_name" : "iob:bookmark_24",
-          "frame" : "{{143, 272}, {80, 32}}",
-          "title" : "保存书签",
-          "uuid" : "A9960838-27A7-4F09-B167-0E69DEB9017C",
-          "font_bold" : true,
-          "class" : "Button",
-          "background_color" : "RGBA(0.835294,1.000000,0.835294,1.000000)",
-          "font_size" : 15,
-          "name" : "button_save_bm"
-        },
-        "selected" : false
-      },
-      {
-        "nodes" : [
-
-        ],
-        "frame" : "{{158, 543}, {89, 32}}",
-        "class" : "Button",
-        "attributes" : {
-          "frame" : "{{143, 272}, {80, 32}}",
-          "title" : "查看书签",
-          "uuid" : "A91A032B-BDAD-4B7A-9BB5-D26EB3BC79CF",
-          "background_color" : "RGBA(0.791667,1.000000,0.851190,1.000000)",
-          "class" : "Button",
-          "name" : "button_show_bm",
-          "font_size" : 15
+          "name" : "label18",
+          "frame" : "{{115, 271}, {150, 32}}",
+          "uuid" : "09F9848D-73DB-4560-95DC-18204394E176",
+          "class" : "Label",
+          "alignment" : "left",
+          "text" : "Label",
+          "font_size" : 18,
+          "font_name" : "<System>"
         },
         "selected" : false
       }
@@ -403,9 +385,9 @@
     "attributes" : {
       "name" : "",
       "enabled" : true,
-      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
       "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
       "flex" : ""
     },
     "selected" : false

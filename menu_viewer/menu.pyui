@@ -1,0 +1,50 @@
+[
+  {
+    "nodes" : [
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{30, 80}, {104, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "font_size" : 15,
+          "frame" : "{{150, 271}, {80, 32}}",
+          "title" : "保存书签",
+          "uuid" : "B4101241-7A33-4548-B789-2888528FD6E9",
+          "class" : "Button",
+          "name" : "save_bm_btn",
+          "image_name" : "iob:bookmark_24"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{30, 160}, {104, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "font_size" : 15,
+          "frame" : "{{150, 271}, {80, 32}}",
+          "title" : "查看书签",
+          "uuid" : "D9A923CD-78BE-418B-8ED2-4B32E281363E",
+          "class" : "Button",
+          "name" : "show_bm_btn",
+          "image_name" : "iob:eye_24"
+        },
+        "selected" : false
+      }
+    ],
+    "frame" : "{{0, 0}, {380, 573}}",
+    "class" : "View",
+    "attributes" : {
+      "enabled" : true,
+      "background_color" : "RGBA(1.000000,1.000000,1.000000,1.000000)",
+      "tint_color" : "RGBA(0.000000,0.478000,1.000000,1.000000)",
+      "border_color" : "RGBA(0.000000,0.000000,0.000000,1.000000)",
+      "flex" : ""
+    },
+    "selected" : false
+  }
+]

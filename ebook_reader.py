@@ -1,25 +1,21 @@
-import threading
-from queue import Queue
 from collections import deque
 import ui
 import console
-from ui import Image
-from config_loader import ConfigLoader
+from controller import Controller
 from e_loader.e_loader import EBookLoader
 
-
 url = 'http://quanben-xiaoshuo.com/n/wuxiashijiedachuanyue/7.html'
-# url = 'http://www.luoxia.com/doupo/20982.htm'
-# url = 'https://www.xbookcn.com/book/chest/14.htm'
-# url = 'http://www.mfxsydw.com/book/15811/9005.html'
-# url = 'https://www.piaotian.com/html/9/9866/6782548.html'
-# url = 'https://m.qu.la/book/5210/10639876.html'
+url = 'http://www.luoxia.com/doupo/20982.htm'
+url = 'https://www.xbookcn.com/book/chest/14.htm'
+url = 'http://www.mfxsydw.com/book/15811/9005.html'
+url = 'https://www.piaotian.com/html/9/9866/6782548.html'
+url = 'https://m.qu.la/book/5210/10639876.html'
 # 网站挂了
-# url = 'http://www.176novel.com/wapbook5713/3736669/'
-# url = 'https://m.qu.la/book/3952/10578367.html'
+url = 'http://www.176novel.com/wapbook5713/3736669/'
+url = 'https://m.qu.la/book/3952/10578367.html'
 
-# url = 'https://m.hunhun520.com/book/wuxianHchuanyue/15134674.html'
-# url = 'http://www.luoqiu.com/read/1/373549.html'
+url = 'https://m.hunhun520.com/book/wuxianHchuanyue/15134674.html'
+url = 'http://www.luoqiu.com/read/1/373549.html'
 # url = 'https://www.69shu.com/txt/1523/679709'
 # url = 'https://m.00xs.cc/mxiaoshuo/3983/9480362/'
 
@@ -27,33 +23,62 @@ url = 'http://quanben-xiaoshuo.com/n/wuxiashijiedachuanyue/7.html'
 # url = 'http://www.xitxt.net/read/19533_12.html'
 # url = 'https://www.piaotian.com/html/9/9275/6863827.html'
 # url = 'http://m.176xsw.com/7/111/read/99575.html'
-
-conf_loader = ConfigLoader()
-
-dict_conf = conf_loader.dict_conf
-dict_bm = conf_loader.dict_bookmark
+# url = 'https://novel.zhwenpg.com/r.php?id=264554'
 
 
-class Reader:
+class ReaderViewer:
     ITEM_H = 32
     LEN_LINE = 19
     LOADING = 'LOADING...'
         
-    def __init__(self, scrollview):
-        self.var_ebook_loader = EBookLoader(dict_conf)
-        self.has_sent_req = False
+    def __init__(self, controller):
+        reader_view = ui.load_view('ebook_reader')
+        scrollview = reader_view['scrollview']
         self.scrollview = scrollview
-        self.queue = Queue()
+        self.reader_view = reader_view
+        for i in range(19):
+            scrollview.add_subview(reader_view[f'label{i}'])
+        scrollview.delegate = self
         self.items = deque(self.scrollview.subviews)
         assert (len(self.items) - 1) * self.ITEM_H > scrollview.height
-        self.init_subviews(url)
+        self.cur_offset = 0
+        self.controller = controller
         
-    def load_chapter(self, init=False):
-        data = self.var_ebook_loader.get_next_bodydata()
-        self.queue.put((*data, init))
-        # print('执行')
+    def req_data_bg(self):
+        self.controller.req_data_bg()
+    
+    def req_data(self, init=False):
+        self.controller.req_data(init)
         
-    def check_title(self):
+    def set_navi_view_name(self, name):
+        self.controller.set_navi_view_name(name)
+                
+    def load_data(self):
+        element = self.controller.load_data()
+        if element is None:
+            return None
+        if element[0] is None:
+            # 到底之后不再复位self.has_sent_req
+            console.hud_alert('已经阅读完毕')
+            return None
+        chapter, title, url, init = element
+        l = len(self.contents)
+        sum_num_lines = 0 if init else 1
+            
+        for para in chapter:
+            num_lines = int((len(para) - 1) / self.LEN_LINE) + 1
+            sum_num_lines += num_lines
+            self.contents.append((para, num_lines))
+        
+        split_contents = '—' * self.LEN_LINE
+        self.contents.append((split_contents, 1))
+        
+        r = len(self.contents)
+        self.titles.append((l, r, title, url))
+        self.scrollview.content_size += (0, sum_num_lines * self.ITEM_H)
+        return sum_num_lines
+            
+    def refresh_title(self):
         off_set = self.cur_offset
         for item in self.items:
             if item.y + item.height >= off_set:
@@ -63,61 +88,22 @@ class Reader:
                 
                 for l, r, name, url in self.titles:
                     if l <= i < r:
-                        nav_view.name = name
+                        self.set_navi_view_name(name)
                 return
         
-    def add2contents(self):
-        if not self.queue.empty():
-            chapter, title, url, init = self.queue.get()
-            if chapter is None:
-                # 到底之后不再复位self.has_sent_req
-                console.hud_alert('已经阅读完毕')
-                return None
-            l = len(self.contents)
-            sum_num_lines = 0 if init else 1
-            for para in chapter:
-                num_lines = int((len(para) - 1) / self.LEN_LINE) + 1
-                sum_num_lines += num_lines
-                self.contents.append((para, num_lines))
-            
-            split_contents = '—' * self.LEN_LINE
-            self.contents.append((split_contents, 1))
-            
-            r = len(self.contents)
-            self.titles.append((l, r, title, url))
-            self.scrollview.content_size += (0, sum_num_lines * self.ITEM_H)
-            self.has_sent_req = False
-            return sum_num_lines
-        return None
-        
-    def load_chapter_bg(self):
-        if not self.has_sent_req:
-            self.has_sent_req = True
-            self.t = threading.Thread(target=self.load_chapter)
-            self.t.start()
-        
-    def init_subviews(self, url, i=0, j=0):
-        if self.has_sent_req:
-            self.t.join()
-        self.has_sent_req = False
-        # self.queue.clear()
-        self.queue = Queue()
+    def reset_view(self, i=0, j=0):
         scrollview = self.scrollview
-        # 这里把offset归零了,并调用了函数
-        scrollview.content_size = (scrollview.width, 0)
-        
-        self.cur_offset = 0
-            
         self.contents = []
         # (l, r, name)
         self.titles = []
-        self.var_ebook_loader.set_url(url)
-        self.load_chapter(True)
-        sum_num_lines = self.add2contents()
+        scrollview.content_size = (scrollview.width, 0)
+        
+        self.req_data(True)
+        sum_num_lines = self.load_data()
         # 其实应该仿照img模块的，但是没必要，白白把逻辑弄麻烦了
         while sum_num_lines <= len(self.items):
-            self.load_chapter()
-            sum_num_lines += self.add2contents()
+            self.req_data()
+            sum_num_lines += self.load_data()
         
         i_wanted = i
         j_wanted = j
@@ -140,7 +126,7 @@ class Reader:
         sum_num_lines += int(j_wanted / self.LEN_LINE)
         # 这个破玩意儿改了之后会自动调用监听函数
         scrollview.content_offset = (0, sum_num_lines*self.ITEM_H)
-        self.check_title()
+        self.refresh_title()
         
     def get_offset(self):
         scrollview = self.scrollview
@@ -170,6 +156,7 @@ class Reader:
         max_offset = scrollview.content_size.y - scrollview.height
         cur_offset = offset_y
         min_offset = min(cur_offset, max_offset)
+        
         scrollview.content_offset = (offset_x, min_offset)
         
     def scrollview_did_scroll(self, scrollview):
@@ -182,9 +169,12 @@ class Reader:
         # print('t')
         
         content_size = scrollview.content_size[1]
+        # init的时候取消函数
+        if not content_size:
+            return
         # 预加载
         if content_size and content_size - self.cur_offset <= 5 * reader_h:
-            self.load_chapter_bg()
+            self.req_data_bg()
         
         # 滚动条下移
         if is_scroll_down:
@@ -197,7 +187,7 @@ class Reader:
                         i, j = i + 1, 0
                     if i >= len(self.contents):
                         text = self.LOADING
-                        self.load_chapter_bg()
+                        self.req_data_bg()
                         i, j = None, None
                         
                     else:
@@ -209,7 +199,7 @@ class Reader:
                     item_start.j = j
                     self.items.rotate(-1)
                 elif item_end.i is None and item_end.y <= offset + reader_h:
-                    if self.add2contents() is None:
+                    if self.load_data() is None:
                         break
                                     
                     item = self.items[-2]
@@ -230,8 +220,7 @@ class Reader:
             while True:
                 item_end = self.items[-1]
                 item_start = self.items[0]
-                
-                if item_start.y >= offset:
+                if item_start.y > offset:
                     i = item_start.i
                     j = item_start.j - self.LEN_LINE
                     if i is None:
@@ -242,7 +231,6 @@ class Reader:
                     
                     if i < 0:
                         break
-                    
                     text = self.contents[i][0][j: j + self.LEN_LINE]
                     item_end.text = text
                     
@@ -253,64 +241,14 @@ class Reader:
                     
                 else:
                     break
-        self.check_title()
-        
-
-class BMTableViewer:
-    def __init__(self, reader, tableview):
-        self.reader = reader
-        self.tableview = tableview
-        
-    def tableview_did_select(self, tableview, section, row):
-        bm = tableview.data_source.items[row]
-        tableview.reload()
-        self.reader.init_subviews(bm['url'], bm['i'], bm['j'])
-        nav_view.pop_view()
-        ui.animate(self.reader.reset_scrollbar, 0.5)
-        # nav_view.right_button_items = main_button_items
-                    
-    def save_bm(self, sender):
-        new_bookmark = self.reader.get_offset()
-                        
-        is_duplicated = conf_loader.check_bookmark(new_bookmark)
-        
-        if not is_duplicated:
-            self.tableview.data_source.items.append(new_bookmark)
-            conf_loader.refresh_file(self.tableview.data_source)
-            console.hud_alert(f'已经保存')
-        else:
-            console.hud_alert('重复操作')
+        self.refresh_title()
     
 
 # url = input('请输入:\n')
-reader_view = ui.load_view('reader')
-sc = reader_view['scrollview']
-bm_view = ui.load_view('bookmark')
-nav_view = ui.NavigationView(reader_view)
-tb = bm_view['tableview']
 
-tb.data_source.items = dict_bm['bookmarks']
-tb.data_source.edit_action = conf_loader.refresh_file
 
-for i in range(18):
-    sc.add_subview(reader_view[f'label{i}'])
+controller = Controller(EBookLoader, ReaderViewer)
 
-var = Reader(sc)
-var_bm_table_viewer = BMTableViewer(var, tb)
+controller.load_reader(url)
+controller.navi_viewer.view.present('fullscreen')
 
-sc.delegate = var
-tb.delegate = var_bm_table_viewer
-
-reader_view['button_save_bm'].action = var_bm_table_viewer.save_bm
-
-nav_view.navigation_bar_hidden = True
-nav_view.present('fullscreen')
-return_button_item = ui.ButtonItem(image=Image.named('iob:arrow_return_left_24'))
-bm_button_items = [return_button_item]
-nav_view.right_button_items = bm_button_items
-return_button_item.action = nav_view.pop_view
-reader_view['button_show_bm'].action = lambda _: nav_view.push_view(bm_view)
-
-menu_button_item = ui.ButtonItem(image=Image.named('iob:navicon_round_24'))
-main_button_items = [menu_button_item]
-menu_button_item.action = nav_view.pop_view
