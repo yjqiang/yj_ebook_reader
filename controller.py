@@ -49,7 +49,7 @@ class Controller:
         self.reader_viewer.reset_view(i, j)
         
         self.pop2reader_viewer()
-        ui.animate(self.reader_viewer.reset_scrollbar, 10)
+        ui.animate(self.reader_viewer.reset_scrollbar, 0.5)
      
     def save_bm(self):
         new_bookmark = self.reader_viewer.get_offset()
