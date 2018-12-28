@@ -1,4 +1,5 @@
 import ui
+import console
 
 
 class MenuViewer:
@@ -11,10 +12,9 @@ class MenuViewer:
         show_bm_btn.action = self.open_bm_viewer
         show_eindex_btn = self.view['show_index_btn']
         show_eindex_btn.action = self.open_eindex_viewer
-        open_url_button = self.view['open_url_button']
-        open_url_button.action = self.open_url
-        self.url_textfield = self.view['url_textfield']
-        
+        open_url_btn = self.view['open_url_btn']
+        self.open_url_btn = open_url_btn
+        open_url_btn.action = self.open_url
         
     def button_selected_look(self, btn):
         btn.background_color = 0.5
@@ -26,12 +26,14 @@ class MenuViewer:
         self.controller.save_bm()
         
     def open_url(self, sender):
-        url = self.url_textfield.text
-        if url:
-            self.controller.load_reader(url)
-            
-    def set_url_textfield_text(self, text):
-        self.url_textfield.text = text
+        try:
+            url = console.input_alert(f'请输入url', '', self.controller.get_url())
+        
+            if url and url != self.controller.get_url():
+                
+                self.controller.load_reader(url)
+        except KeyboardInterrupt:
+            pass
         
     def open_bm_viewer(self, sender=None):
         self.button_selected_look(sender)

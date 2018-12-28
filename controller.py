@@ -30,10 +30,6 @@ class Controller:
         self.navi_viewer.pop_view()
         
     def open_menu_viewer(self):
-        url = self.get_url()
-        if url is None:
-            url = ''
-        self.menu_viewer.set_url_textfield_text(url)
         self.navi_viewer.push_view(self.menu_viewer.view)
         
     def open_bm_viewer(self):
@@ -52,6 +48,7 @@ class Controller:
         new_bookmark = self.reader_viewer.get_offset()
         if new_bookmark is not None:
             return new_bookmark['url']
+        return ''
         
     def load_reader(self, url, i=0, j=0):
         if self.has_sent_req:
