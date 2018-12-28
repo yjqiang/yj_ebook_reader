@@ -53,6 +53,12 @@
   [[websites.body.next]]
     name = 'a'
     string = "下一"
+  [websites.body.index]
+    name = "a"
+    string = "返回目录"
+  [[websites.index.content]]
+    css_selector = "li > a[href$=\"html\"]"
+    key = "href"
     
 [[websites]]
   url = "m.qu.la"

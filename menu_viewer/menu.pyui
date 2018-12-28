@@ -13,6 +13,7 @@
           "title" : "保存书签",
           "uuid" : "B4101241-7A33-4548-B789-2888528FD6E9",
           "class" : "Button",
+          "font_bold" : true,
           "name" : "save_bm_btn",
           "image_name" : "iob:bookmark_24"
         },
@@ -30,8 +31,63 @@
           "title" : "查看书签",
           "uuid" : "D9A923CD-78BE-418B-8ED2-4B32E281363E",
           "class" : "Button",
+          "font_bold" : true,
           "name" : "show_bm_btn",
           "image_name" : "iob:eye_24"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{30, 240}, {104, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "name" : "show_index_btn",
+          "frame" : "{{150, 271}, {80, 32}}",
+          "title" : "查看目录",
+          "uuid" : "18DF2A60-3D5E-4A4F-9B03-1A8C7B223192",
+          "class" : "Button",
+          "font_bold" : true,
+          "font_size" : 15,
+          "image_name" : "iob:clipboard_24"
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{6, 308}, {368, 32}}",
+        "class" : "TextField",
+        "attributes" : {
+          "name" : "url_textfield",
+          "frame" : "{{90, 271}, {200, 32}}",
+          "spellchecking_type" : "default",
+          "class" : "TextField",
+          "uuid" : "E0164993-1F6C-4AD5-9965-7BDE5887E378",
+          "alignment" : "left",
+          "autocorrection_type" : "default",
+          "font_size" : 17,
+          "font_name" : "<System>"
+        },
+        "selected" : true
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{117, 371}, {138, 28}}",
+        "class" : "Button",
+        "attributes" : {
+          "font_size" : 15,
+          "frame" : "{{150, 271}, {80, 32}}",
+          "title" : "确认打开该url",
+          "uuid" : "4863BE1F-700A-491A-89CE-B4EFC8A9C322",
+          "class" : "Button",
+          "name" : "open_url_button",
+          "image_name" : "iob:checkmark_24"
         },
         "selected" : false
       }

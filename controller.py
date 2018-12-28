@@ -18,20 +18,29 @@ class Controller:
         self.bm_viewer = BmViewer(self, dict_bm['bookmarks'])
         self.menu_viewer = MenuViewer(self)
         self.var_eloader = ELoader(dict_conf)
-        self.navi_viewer = NaviViewer(self, self.reader_viewer.reader_view)
+        self.navi_viewer = NaviViewer(self, self.reader_viewer.var_ebody_viewer.reader_view)
         
         self.conf_loader = conf_loader
-        self.queue = Queue()
+        self.queue_ebody = Queue()
+        self.queue_eindex = Queue()
         self.has_sent_req = False
+        self.has_sent_eindex_req = False
         
     def pop2reader_viewer(self):
         self.navi_viewer.pop_view()
         
     def open_menu_viewer(self):
+        url = self.get_url()
+        if url is None:
+            url = ''
+        self.menu_viewer.set_url_textfield_text(url)
         self.navi_viewer.push_view(self.menu_viewer.view)
         
     def open_bm_viewer(self):
         self.navi_viewer.push_view(self.bm_viewer.view)
+        
+    def open_eindex_viewer(self):
+        self.navi_viewer.push_view(self.reader_viewer.var_index_viewer.reader_view)
         
     def set_navi_view_name(self, name):
         self.navi_viewer.view.name = name
@@ -39,12 +48,21 @@ class Controller:
     def del_bm(self, new_data_src):
         self.conf_loader.refresh_file(new_data_src)
         
+    def get_url(self):
+        new_bookmark = self.reader_viewer.get_offset()
+        if new_bookmark is not None:
+            return new_bookmark['url']
+        
     def load_reader(self, url, i=0, j=0):
         if self.has_sent_req:
-            self.t.join()
+            self.t_ebody.join()
+        if self.has_sent_eindex_req:
+            self.t_eindex.join()
         self.has_sent_req = False
+        self.has_sent_eindex_req = False
         # self.queue.clean 之后考虑优雅点
-        self.queue = Queue()
+        self.queue_ebody = Queue()
+        self.queue_eindex = Queue()
         self.var_eloader.set_url(url)
         self.reader_viewer.reset_view(i, j)
         
@@ -63,21 +81,40 @@ class Controller:
             console.hud_alert('重复操作')
         self.pop2reader_viewer()
             
-    def req_data(self, init=False):
+    def req_ebody_data(self, init=False):
         data = self.var_eloader.get_next_bodydata()
-        self.queue.put((*data, init))
+        self.queue_ebody.put((*data, init))
         # print('执行')
             
-    def req_data_bg(self):
+    def req_ebody_data_bg(self):
         if not self.has_sent_req:
             self.has_sent_req = True
-            self.t = threading.Thread(target=self.req_data)
-            self.t.start()
+            self.t_ebody = threading.Thread(target=self.req_ebody_data)
+            self.t_ebody.start()
             
-    def load_data(self):
-        if not self.queue.empty():
-            element = self.queue.get()
+    def req_eindex_data(self, init=False):
+        data = self.var_eloader.get_next_indexdata()
+        self.queue_eindex.put((*data, init))
+        # print('执行')
+            
+    def req_eindex_data_bg(self):
+        if not self.has_sent_req:
+            self.has_sent_eindex_req = True
+            self.t_eindex = threading.Thread(target=self.req_eindex_data)
+            self.t_eindex.start()
+            
+    def load_ebody_data(self):
+        if not self.queue_ebody.empty():
+            element = self.queue_ebody.get()
             if element[0] is not None:
                 self.has_sent_req = False
+            return element
+        return None
+        
+    def load_eindex_data(self):
+        if not self.queue_eindex.empty():
+            element = self.queue_eindex.get()
+            if element[0] is not None:
+                self.has_sent_eindex_req = False
             return element
         return None
