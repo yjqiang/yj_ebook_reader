@@ -94,8 +94,8 @@ class CssSelectorRule(TagRule):
     
     # None / result
     def _find(self, soup):
-        return soup.select_one(self.css_selector)
+        return self.css_selector.select_one(soup)
    
     # list
     def _findall(self, soup):
-        return soup.select(self.css_selector)
+        return self.css_selector.select(soup)

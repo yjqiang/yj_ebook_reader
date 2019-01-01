@@ -1,4 +1,5 @@
 import re
+import soupsieve as sv
 from .base_rule import ReRule, CssSelectorRule, BsRule
         
         
@@ -8,7 +9,7 @@ class PageRule:
             string = re.compile(dict_rule['re'])
             return ReRule(string)
         elif 'css_selector' in dict_rule:
-            css_selector = dict_rule['css_selector']
+            css_selector = sv.compile(dict_rule['css_selector'])
             attr = dict_rule.get('key', def_key)
             return CssSelectorRule(css_selector, attr)
         else:
