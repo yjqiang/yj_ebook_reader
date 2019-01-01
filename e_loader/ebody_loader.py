@@ -71,12 +71,15 @@ class EImgBodyLoader(BodyLoader):
             self.title = self.get_title()
             self.cur_offset = 0
         if self.cur_offset >= len(self.contents):
-            if not self.get_next_url():
-                return None, None, None
-            self.fetch_page_with_captcha()
-            self.contents = self.get_content()
-            self.title = self.get_title()
-            self.cur_offset = 0
+            while True:
+                if not self.get_next_url():
+                    return None, None, None
+                self.fetch_page_with_captcha()
+                self.contents = self.get_content()
+                self.title = self.get_title()
+                self.cur_offset = 0
+                if self.contents:
+                    break
         if not self.contents:
             return None, None, None
         
