@@ -287,6 +287,13 @@
     name = 'a'
     attrs = {class = "btnnext"}
     
+[[websites]]
+  url = "manhwahentai.com"
+  [[websites.body.content]]
+    css_selector = "img[class=\"wp-manga-chapter-img\"][src]"
+  [[websites.body.next]]
+    css_selector = "a[class=\"btn next_page\"]"
+    
 # 可以认为这是个default设置
 [[websites]]
   url = "."
