@@ -6,11 +6,10 @@ from rule.rule import WebsiteRule
 class EBookLoader:
     def __init__(self, list_confs):
         self.list_confs = list_confs
-        self.cache = {}
         rule = WebsiteRule()
         
-        self.body_loader = EBookBodyLoader(self.cache, rule.body_rule, rule)
-        self.index_loader = EIndexLoader(self.cache, rule.index_rule, rule)
+        self.body_loader = EBookBodyLoader(rule.body_rule, rule)
+        self.index_loader = EIndexLoader(rule.index_rule, rule)
         self.rule = rule
                 
     def set_url(self, url):
@@ -37,10 +36,9 @@ class EBookLoader:
 class EImgLoader(EBookLoader):
     def __init__(self, list_confs):
         self.list_confs = list_confs
-        self.cache = {}
         rule = WebsiteRule()
         
-        self.body_loader = EImgBodyLoader(self.cache, rule.body_rule, rule)
-        self.index_loader = EIndexLoader(self.cache, rule.index_rule, rule)
+        self.body_loader = EImgBodyLoader(rule.body_rule, rule)
+        self.index_loader = EIndexLoader(rule.index_rule, rule)
         self.rule = rule
         

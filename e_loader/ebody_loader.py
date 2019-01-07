@@ -84,11 +84,7 @@ class EImgBodyLoader(BodyLoader):
             return None, None, None
         
         img_url = self.contents[self.cur_offset]
-        if img_url in self.cache:
-            img = self.cache[img_url]
-        else:
-            img = ui.Image.from_data(web.get(img_url).content)
-            self.cache[img_url] = img
+        img = ui.Image.from_data(web.get(img_url).content)
         self.cur_offset += 1
         return [img], self.title, self.url
         

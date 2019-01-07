@@ -6,9 +6,7 @@ from bs4 import BeautifulSoup
 
 
 class EPageLoader:
-    def __init__(self, cache, page_rule, website_rule):
-        # 'url': text
-        self.cache = cache
+    def __init__(self, page_rule, website_rule):
         self.rule = page_rule
         self.website_rule = website_rule
 
@@ -37,22 +35,16 @@ class EPageLoader:
         return False
 
     def fetch_page(self):
-        if self.url in self.cache:
-            text = self.cache[self.url]
-            soups = BeautifulSoup(text, 'html.parser')
-            self.text = text
-            self.soups = soups
-        else:
-            rsp = web.get(self.url, headers=self.website_rule.headers)
-            # encoding为None，requests模块会自己猜测
-            
-            rsp.encoding = self.website_rule.encoding
-            # print(rsp.encoding)
-            text = rsp.text
-            soups = BeautifulSoup(text, 'html.parser')
-            self.cache[self.url] = text
-            self.text = text
-            self.soups = soups
+        # 验证页面的话,不要缓存
+        rsp = web.get(self.url, headers=self.website_rule.headers, allow_cache=False)
+        # encoding为None，requests模块会自己猜测
+        
+        rsp.encoding = self.website_rule.encoding
+        # print(rsp.encoding)
+        text = rsp.text
+        soups = BeautifulSoup(text, 'html.parser')
+        self.text = text
+        self.soups = soups
             
     def fetch_page_with_captcha(self):
         re_safe_dog = re.compile('self.location="(.+)"')
