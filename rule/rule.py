@@ -1,22 +1,20 @@
-import re
-import soupsieve as sv
 from .base_rule import ReRule, CssSelectorRule, BsRule
         
         
 class PageRule:
     def get_rule(self, dict_rule, def_key=None, def_name=None):
         if 're' in dict_rule:
-            string = re.compile(dict_rule['re'])
+            string = dict_rule['re']
             return ReRule(string)
         elif 'css_selector' in dict_rule:
-            css_selector = sv.compile(dict_rule['css_selector'])
+            css_selector = dict_rule['css_selector']
             attr = dict_rule.get('key', def_key)
             return CssSelectorRule(css_selector, attr)
         else:
             name = dict_rule.get('name', def_name)
             attrs = dict_rule.get('attrs', {})
             if 'string' in dict_rule:
-                string = re.compile(dict_rule['string'])
+                string = dict_rule['string']
             else:
                 string = None
             attr = dict_rule.get('key', def_key)

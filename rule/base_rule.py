@@ -1,6 +1,10 @@
+import re
+import soupsieve as sv
+
+
 class ReRule:
     def __init__(self, string):
-        self.string = string
+        self.string = re.compile(string)
     
     # None / result
     def _find(self, text):
@@ -75,7 +79,10 @@ class BsRule(TagRule):
     def __init__(self, name, attrs, string, attr):
         self.name = name
         self.attrs = attrs
-        self.string = string
+        if string is not None:
+            self.string = re.compile(string)
+        else:
+            self.string = None
         self.attr = attr
         
     # None / result
@@ -89,7 +96,7 @@ class BsRule(TagRule):
                                 
 class CssSelectorRule(TagRule):
     def __init__(self, css_selector, attr):
-        self.css_selector = css_selector
+        self.css_selector = sv.compile(css_selector)
         self.attr = attr
     
     # None / result
