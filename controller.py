@@ -75,7 +75,7 @@ class Controller:
             self.conf_loader.refresh_file(self.bm_viewer.add_new_bm(new_bookmark))
             console.hud_alert(f'已经保存')
         else:
-            console.hud_alert('重复操作')
+            console.hud_alert('重复操作或者无效书签')
         self.pop2reader_viewer()
             
     def req_ebody_data(self, init=False):
