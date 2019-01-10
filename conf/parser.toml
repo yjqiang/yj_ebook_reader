@@ -1,5 +1,6 @@
 [[websites]]
-  url = "www.luoxia.com"  
+  url = "www.luoxia.com"
+  encoding = "utf-8"
   # 判定标题的
   # 判定文章的(例如:br / b ....)
   [[websites.body.content]]
