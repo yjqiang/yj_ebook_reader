@@ -95,7 +95,7 @@ class Controller:
         # print('执行')
             
     def req_eindex_data_bg(self):
-        if not self.has_sent_req:
+        if not self.has_sent_eindex_req:
             self.has_sent_eindex_req = True
             self.t_eindex = threading.Thread(target=self.req_eindex_data)
             self.t_eindex.start()
