@@ -9,7 +9,8 @@ class PageRule:
         elif 'css_selector' in dict_rule:
             css_selector = dict_rule['css_selector']
             attr = dict_rule.get('key', def_key)
-            return CssSelectorRule(css_selector, attr)
+            string_pattern = dict_rule.get('string_pattern', None)
+            return CssSelectorRule(css_selector, attr, string_pattern)
         else:
             name = dict_rule.get('name', def_name)
             attrs = dict_rule.get('attrs', {})
@@ -18,7 +19,8 @@ class PageRule:
             else:
                 string = None
             attr = dict_rule.get('key', def_key)
-            return BsRule(name, attrs, string, attr)
+            string_pattern = dict_rule.get('string_pattern', None)
+            return BsRule(name, attrs, string, attr, string_pattern)
         
     def set_title_rule(self, conf):
         dict_rule = conf.get('title', {})

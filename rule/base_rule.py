@@ -52,7 +52,9 @@ class TagRule:
             return None
         if not with_string:
             return result
-        return result.string
+        if self.string_pattern is None:
+            return result.string
+        return result[self.string_pattern]
         
     def find_attr(self, text, soup, with_string=False):
         result = self._find(soup)
@@ -60,23 +62,29 @@ class TagRule:
             return None
         if not with_string:
             return result[self.attr]
-        return result[self.attr], result.string
+        if self.string_pattern is None:
+            return result[self.attr], result.string
+        return result[self.attr], result[self.string_pattern]
         
     def findall_raw(self, text, soup, with_string=False):
         results = self._findall(soup)
         if not with_string:
             return results
-        return [result.string for result in results]
-        
+        if self.string_pattern is None:
+            return [result.string for result in results]
+        return [result[self.string_pattern] for result in results]
+            
     def findall_attr(self, text, soup, with_string=False):
         results = self._findall(soup)
         if not with_string:
             return [result[self.attr] for result in results]
-        return [(result[self.attr], result.string) for result in results]
+        if self.string_pattern is None:
+            return [(result[self.attr], result.string) for result in results]
+        return [(result[self.attr], result[self.string_pattern]) for result in results]
         
     
 class BsRule(TagRule):
-    def __init__(self, name, attrs, string, attr):
+    def __init__(self, name, attrs, string, attr, string_pattern):
         self.name = name
         self.attrs = attrs
         if string is not None:
@@ -84,6 +92,7 @@ class BsRule(TagRule):
         else:
             self.string = None
         self.attr = attr
+        self.string_pattern = string_pattern
         
     # None / result
     def _find(self, soup):
@@ -95,9 +104,10 @@ class BsRule(TagRule):
 
                                 
 class CssSelectorRule(TagRule):
-    def __init__(self, css_selector, attr):
+    def __init__(self, css_selector, attr, string_pattern):
         self.css_selector = sv.compile(css_selector)
         self.attr = attr
+        self.string_pattern = string_pattern
     
     # None / result
     def _find(self, soup):
