@@ -47,7 +47,6 @@ class IndexViewer:
             return None
         if element[0] is None:
             if not element[2]:
-                # 到底之后不再复位self.has_sent_req
                 console.hud_alert('已经阅读完毕')
             return None
         chapter, title, init = element
@@ -148,9 +147,9 @@ class IndexViewer:
                     j = 0
             
                     # 由于一定会补足间隔行，所以这里i一定不越界
-                    text = self.contents[i][0][j: j + self.LEN_LINE]
+                    title = self.contents[i][0][j: j + self.LEN_LINE]
                     
-                    item_end.text = text
+                    item_end.title = title
                     item_end.y = item.y + self.ITEM_H
                     item_end.i = i
                     item_end.j = j
