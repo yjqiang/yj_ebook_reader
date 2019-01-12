@@ -8,7 +8,7 @@ caches = {}
 def get(url, headers=None, allow_cache=True):
     url = url.strip()
     if url in caches:
-        print('cached', url)
+        # print('cached', url)
         return caches[url]
     while True:
         try:
