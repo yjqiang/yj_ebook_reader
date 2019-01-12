@@ -204,6 +204,12 @@
   [[websites.body.next]]
     name = 'a'
     string = "下一章"
+  [websites.body.index]
+    css_selector = "h1 > a[href]"
+  [[websites.index.content]]
+    css_selector = "div[class=\"chapter-list\"] a[href]"
+    key = "href"
+    string_pattern = "title"
     
 [[websites]]
   url = "raws.mangazuki.co"  
