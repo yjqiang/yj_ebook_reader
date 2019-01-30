@@ -183,6 +183,24 @@
     css_selector = "a[rel=\"next\"]"
     
 [[websites]]
+  url = "m.banzhuer.com"
+  encoding = "gbk"
+  [[websites.body.content]]
+    css_selector = "article"
+  [[websites.body.next]]
+    css_selector = "a[class=\"dise rt\"]"
+  [websites.body.index]
+    name = "a"
+    string = "返回目录"
+    key="href"
+  [[websites.index.content]]
+    css_selector = "ul[class=\"lb fk\"] a[href]"
+    key = "href"
+  [[websites.index.next]]
+    css_selector = "div[class=\"fenye\"]:first-child div[class=\"showpage r3\"]:first-child > ul a[class=\"xbk this tb\"] ~ li >  a[class=\"xbk\"]"
+    key = "href"
+    
+[[websites]]
   url = "e-hentai.org"
   [[websites.body.content]]
     name = "img"
