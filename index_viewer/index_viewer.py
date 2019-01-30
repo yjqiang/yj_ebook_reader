@@ -144,15 +144,13 @@ class IndexViewer:
                                     
                     item = self.items[-2]
                     i = item.i + 1
-                    j = 0
             
                     # 由于一定会补足间隔行，所以这里i一定不越界
-                    title = self.contents[i][0][j: j + self.LEN_LINE]
-                    
+                    url, title = self.contents[i]
                     item_end.title = title
                     item_end.y = item.y + self.ITEM_H
                     item_end.i = i
-                    item_end.j = j
+                    item_end.url = url
                     
                 else:
                     break
