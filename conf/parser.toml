@@ -211,6 +211,16 @@
     attrs = {id = "next"}
     
 [[websites]]
+  url = "exhentai.org"
+  headers = {cookie = ""}
+  [[websites.body.content]]
+    css_selector = "img[id=\"img\"]"
+    key = "src"
+  [[websites.body.next]]
+    css_selector = "a[id=\"next\"]"
+    key = "href"  
+
+[[websites]]
   url = "m.k886.net"
   [[websites.body.content]]
     name = "img"
