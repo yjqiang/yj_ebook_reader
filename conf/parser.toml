@@ -249,6 +249,14 @@
     re = "var[ ]*next_chapter[^;]+\"(.+)\""
     
 [[websites]]
+  url = "mangazuki.me"
+  [[websites.body.content]]
+    css_selector = "div[class=\"page-break\"] > img"
+    key = "src"
+  [[websites.body.next]]
+    css_selector = "a[class=\"btn next_page\"]"
+    
+[[websites]]
   url = "www.177pic.info"
   [[websites.body.content]]
     name = "img"
