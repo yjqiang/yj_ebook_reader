@@ -9,7 +9,7 @@ class ZSLoader:
         self.index_loader = ZSIndexLoader(self)
                 
     def set_url(self, orig):
-        # src_id!offset / src_id
+        # src_id#offset / src_id
         if '#' in orig:
             src_id, offset = orig.split('#')
             offset = int(offset)

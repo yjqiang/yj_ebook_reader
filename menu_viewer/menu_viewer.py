@@ -15,13 +15,19 @@ class MenuViewer:
         open_url_btn = self.view['open_url_btn']
         self.open_url_btn = open_url_btn
         open_url_btn.action = self.open_url
-        
+        zs_search_btn = self.view['zs_search_btn']
+        self.zs_search_btn = zs_search_btn
+        zs_search_btn.action = self.zs_search
+                
     def button_selected_look(self, btn):
         btn.background_color = 0.5
         
     def button_done_look(self, btn):
         btn.background_color = 0
          
+    def zs_search(self, btn):
+        self.controller.zs_search()
+    
     def save_bm(self, sender):
         self.controller.save_bm()
         
@@ -31,7 +37,7 @@ class MenuViewer:
         
             if url and url != self.controller.get_url():
                 
-                self.controller.load_reader(url)
+                self.controller.load_e(url)
         except KeyboardInterrupt:
             pass
         

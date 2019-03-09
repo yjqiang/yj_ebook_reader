@@ -8,13 +8,13 @@
         "frame" : "{{30, 80}, {104, 32}}",
         "class" : "Button",
         "attributes" : {
-          "font_size" : 15,
+          "name" : "save_bm_btn",
           "frame" : "{{150, 271}, {80, 32}}",
           "title" : "保存书签",
           "uuid" : "B4101241-7A33-4548-B789-2888528FD6E9",
           "class" : "Button",
           "font_bold" : true,
-          "name" : "save_bm_btn",
+          "font_size" : 15,
           "image_name" : "iob:ios7_star_outline_24"
         },
         "selected" : false
@@ -26,13 +26,13 @@
         "frame" : "{{30, 160}, {104, 32}}",
         "class" : "Button",
         "attributes" : {
-          "font_size" : 15,
+          "name" : "show_bm_btn",
           "frame" : "{{150, 271}, {80, 32}}",
           "title" : "查看书签",
           "uuid" : "D9A923CD-78BE-418B-8ED2-4B32E281363E",
           "class" : "Button",
           "font_bold" : true,
-          "name" : "show_bm_btn",
+          "font_size" : 15,
           "image_name" : "iob:ios7_eye_outline_24"
         },
         "selected" : false
@@ -44,13 +44,13 @@
         "frame" : "{{30, 240}, {104, 32}}",
         "class" : "Button",
         "attributes" : {
-          "name" : "show_index_btn",
+          "font_size" : 15,
           "frame" : "{{150, 271}, {80, 32}}",
           "title" : "查看目录",
           "uuid" : "18DF2A60-3D5E-4A4F-9B03-1A8C7B223192",
           "class" : "Button",
           "font_bold" : true,
-          "font_size" : 15,
+          "name" : "show_index_btn",
           "image_name" : "iob:navicon_24"
         },
         "selected" : false
@@ -68,10 +68,28 @@
           "uuid" : "18DF2A60-3D5E-4A4F-9B03-1A8C7B223192",
           "class" : "Button",
           "font_bold" : true,
-          "name" : "open_url_btn",
-          "font_size" : 15
+          "font_size" : 15,
+          "name" : "open_url_btn"
         },
         "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{30, 400}, {104, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "name" : "zs_search_btn",
+          "frame" : "{{150, 271}, {80, 32}}",
+          "title" : "追书搜索",
+          "uuid" : "18DF2A60-3D5E-4A4F-9B03-1A8C7B223192",
+          "class" : "Button",
+          "font_bold" : true,
+          "font_size" : 15,
+          "image_name" : "iob:ios7_search_24"
+        },
+        "selected" : true
       }
     ],
     "frame" : "{{0, 0}, {380, 573}}",
