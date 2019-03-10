@@ -54,9 +54,10 @@ class ZSBodyLoader:
         return words
         
     def get_next_url(self):
-        url, self.title = self.root.get_chapter_info(self.cur_offset)
-        if url is None:
+        result = self.root.get_chapter_info(self.cur_offset)
+        if result is None:
             return False
+        url, self.title = result
         encode_url = parse.quote_plus(url)
         self.url = f'http://chapter2.zhuishushenqi.com/chapter/{encode_url}'
         return True
