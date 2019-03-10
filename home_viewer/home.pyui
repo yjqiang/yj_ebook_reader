@@ -8,14 +8,14 @@
         "frame" : "{{30, 80}, {104, 32}}",
         "class" : "Button",
         "attributes" : {
-          "font_size" : 15,
+          "image_name" : "iob:ios7_eye_32",
           "frame" : "{{150, 271}, {80, 32}}",
-          "title" : "保存书签",
-          "uuid" : "B4101241-7A33-4548-B789-2888528FD6E9",
+          "title" : "查看书签",
+          "uuid" : "D9A923CD-78BE-418B-8ED2-4B32E281363E",
           "class" : "Button",
           "font_bold" : true,
-          "name" : "btn_save_bm",
-          "image_name" : "iob:star_32"
+          "font_size" : 15,
+          "name" : "btn_open_bm"
         },
         "selected" : false
       },
@@ -28,14 +28,32 @@
         "attributes" : {
           "font_size" : 15,
           "frame" : "{{150, 271}, {80, 32}}",
-          "title" : "返回主页",
-          "uuid" : "D9A923CD-78BE-418B-8ED2-4B32E281363E",
+          "title" : "在线小说",
+          "uuid" : "18DF2A60-3D5E-4A4F-9B03-1A8C7B223192",
           "class" : "Button",
           "font_bold" : true,
-          "name" : "btn_go_home",
-          "image_name" : "iob:close_24"
+          "name" : "btn_search_ebook",
+          "image_name" : "iob:ios7_bookmarks_24"
         },
         "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{30, 320}, {104, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "image_name" : "iob:search_24",
+          "frame" : "{{150, 271}, {80, 32}}",
+          "title" : "追书神器",
+          "uuid" : "18DF2A60-3D5E-4A4F-9B03-1A8C7B223192",
+          "class" : "Button",
+          "font_bold" : true,
+          "font_size" : 15,
+          "name" : "btn_search_zsbook"
+        },
+        "selected" : true
       },
       {
         "nodes" : [
@@ -44,16 +62,16 @@
         "frame" : "{{30, 160}, {104, 32}}",
         "class" : "Button",
         "attributes" : {
-          "image_name" : "iob:navicon_round_24",
+          "font_size" : 15,
           "frame" : "{{150, 271}, {80, 32}}",
-          "title" : "查看目录",
-          "uuid" : "D9A923CD-78BE-418B-8ED2-4B32E281363E",
+          "title" : "在线漫画",
+          "uuid" : "18DF2A60-3D5E-4A4F-9B03-1A8C7B223192",
           "class" : "Button",
           "font_bold" : true,
-          "font_size" : 15,
-          "name" : "btn_show_index"
+          "name" : "btn_search_eimg",
+          "image_name" : "iob:images_24"
         },
-        "selected" : true
+        "selected" : false
       }
     ],
     "frame" : "{{0, 0}, {380, 573}}",

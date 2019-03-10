@@ -3,7 +3,7 @@ from .zsindex_loader import ZSIndexLoader
 from .zsbody_loader import ZSBodyLoader
 
 
-class ZSLoader:
+class ZSBookLoader:
     def __init__(self):
         self.body_loader = ZSBodyLoader(self)
         self.index_loader = ZSIndexLoader(self)

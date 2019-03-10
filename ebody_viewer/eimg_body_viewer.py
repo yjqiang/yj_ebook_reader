@@ -12,15 +12,16 @@ class EImgBodyViewer:
     LOADING_HEIGHT = WIDTH_LINE / LOADING.size.x * LOADING.size.y
         
     def __init__(self, parent):
-        reader_view = ui.load_view('ebody_viewer/eimg_body')
-        scrollview = reader_view['scrollview']
+        view = ui.load_view('ebody_viewer/eimg_body')
+        scrollview = view['scrollview']
         for i in range(9):
-            # print(reader_view[f'imageview{i}'])
-            scrollview.add_subview(reader_view[f'imageview{i}'])
+            # print(view[f'imageview{i}'])
+            scrollview.add_subview(view[f'imageview{i}'])
         scrollview.delegate = self
         self.has_sent_req = False
         self.scrollview = scrollview
-        self.reader_view = reader_view
+        view.right_btns_desc = 'menu'
+        self.view = view
         self.items = deque(self.scrollview.subviews)
         assert (len(self.items) - 1) * self.ITEM_H > scrollview.height
         self.parent = parent

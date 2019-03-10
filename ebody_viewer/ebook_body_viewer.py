@@ -9,12 +9,13 @@ class EBookBodyViewer:
     LOADING = 'LOADING...'
         
     def __init__(self, parent):
-        reader_view = ui.load_view('ebody_viewer/ebook_body')
-        scrollview = reader_view['scrollview']
+        view = ui.load_view('ebody_viewer/ebook_body')
+        scrollview = view['scrollview']
         self.scrollview = scrollview
-        self.reader_view = reader_view
+        view.right_btns_desc = 'menu'
+        self.view = view
         for i in range(19):
-            scrollview.add_subview(reader_view[f'label{i}'])
+            scrollview.add_subview(view[f'label{i}'])
         scrollview.delegate = self
         self.items = deque(self.scrollview.subviews)
         assert (len(self.items) - 1) * self.ITEM_H > scrollview.height

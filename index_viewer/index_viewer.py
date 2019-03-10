@@ -9,16 +9,17 @@ class IndexViewer:
     LOADING = 'LOADING...'
         
     def __init__(self, parent):
-        reader_view = ui.load_view('index_viewer/index')
-        scrollview = reader_view['scrollview']
+        view = ui.load_view('index_viewer/index')
+        scrollview = view['scrollview']
         
         for i in range(19):
-            button = reader_view[f'button{i}']
+            button = view[f'button{i}']
             scrollview.add_subview(button)
             button.action = self.open_url
         self.has_sent_req = False
         self.scrollview = scrollview
-        self.reader_view = reader_view
+        view.right_btns_desc = 'return'
+        self.view = view
         scrollview.delegate = self
         self.items = deque(self.scrollview.subviews)
         assert (len(self.items) - 1) * self.ITEM_H > scrollview.height

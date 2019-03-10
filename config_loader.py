@@ -24,7 +24,12 @@ class ConfigLoader():
     def check_bookmark(self, new_bm):
         if new_bm is None:
             return True
-        return new_bm in self.dict_bookmark['bookmarks']
+        for bm in self.dict_bookmark['bookmarks']:
+            if bm['i'] == new_bm['i'] and \
+                    bm['j'] == new_bm['j'] and \
+                    bm['url'] == new_bm['url']:
+                return True
+        return False
             
     def refresh_file(self, bmview):
         self.dict_bookmark['bookmarks'] = bmview.items

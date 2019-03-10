@@ -1,32 +1,27 @@
 import console
 import ui
-# 后续两个viewer合并
 
 
-class ZSSearchViewer:
+class ZSBookSearchViewer:
     def __init__(self, controller):
         self.controller = controller
-        view = ui.load_view('zs_search_viewer/zs_srcs')
+        view = ui.load_view('zsbook_search_viewer/src_index')
         tb = view['tableview']
 
         tb.data_source.items = []
         self.tb = tb
+        view.right_btns_desc = 'return'
         self.view = view
         tb.delegate = self
         
     def tableview_did_select(self, bm_view, section, row):
         src_id = self.srcs[row][0]
         print(src_id)
-        self.controller.load_zs(src_id)
+        self.controller.load_zsbook(src_id)
         return src_id
         
     # 返回bookid
-    def search_books(self, zs_loader):
-        try:
-            keywords = console.input_alert('请输入要搜查的数目的关键词')
-        except KeyboardInterrupt:
-            return
-        
+    def search_books(self, zs_loader, keywords):
         list_books = zs_loader.search_books(keywords)
         list_msg = []
         for i, values in enumerate(list_books):

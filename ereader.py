@@ -28,7 +28,8 @@ class EReader:
             return self.controller.load_eindex_data()
             
     def open_url(self, url):
-        self.controller.load_reader(url)
+        
+        self.controller.load_reader(url, is_init=False)
         
     def set_navi_view_name(self, name):
         self.controller.set_navi_view_name(name)
