@@ -8,13 +8,13 @@
         "frame" : "{{30, 80}, {104, 32}}",
         "class" : "Button",
         "attributes" : {
-          "font_size" : 15,
+          "name" : "btn_save_bm",
           "frame" : "{{150, 271}, {80, 32}}",
           "title" : "保存书签",
           "uuid" : "B4101241-7A33-4548-B789-2888528FD6E9",
           "class" : "Button",
           "font_bold" : true,
-          "name" : "btn_save_bm",
+          "font_size" : 15,
           "image_name" : "iob:star_32"
         },
         "selected" : false
@@ -23,16 +23,16 @@
         "nodes" : [
 
         ],
-        "frame" : "{{30, 240}, {104, 32}}",
+        "frame" : "{{30, 320}, {104, 32}}",
         "class" : "Button",
         "attributes" : {
-          "font_size" : 15,
+          "name" : "btn_go_home",
           "frame" : "{{150, 271}, {80, 32}}",
           "title" : "返回主页",
           "uuid" : "D9A923CD-78BE-418B-8ED2-4B32E281363E",
           "class" : "Button",
           "font_bold" : true,
-          "name" : "btn_go_home",
+          "font_size" : 15,
           "image_name" : "iob:close_24"
         },
         "selected" : false
@@ -50,8 +50,26 @@
           "uuid" : "D9A923CD-78BE-418B-8ED2-4B32E281363E",
           "class" : "Button",
           "font_bold" : true,
-          "font_size" : 15,
-          "name" : "btn_show_index"
+          "name" : "btn_show_index",
+          "font_size" : 15
+        },
+        "selected" : false
+      },
+      {
+        "nodes" : [
+
+        ],
+        "frame" : "{{30, 240}, {104, 32}}",
+        "class" : "Button",
+        "attributes" : {
+          "image_name" : "iob:link_32",
+          "frame" : "{{150, 271}, {80, 32}}",
+          "title" : "当前网址",
+          "uuid" : "D9A923CD-78BE-418B-8ED2-4B32E281363E",
+          "class" : "Button",
+          "font_bold" : true,
+          "name" : "btn_get_url",
+          "font_size" : 15
         },
         "selected" : true
       }

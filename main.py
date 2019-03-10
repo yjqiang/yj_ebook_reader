@@ -167,6 +167,12 @@ class Controller:
         else:
             console.hud_alert('重复操作或者无效书签')
         self.pop_1_view()
+        
+    def get_url(self):
+        new_bm = self.reader_viewer.get_offset()
+        if new_bm is not None:
+            return new_bm['url']
+        return ''
     
     def del_bm(self, new_data_src):
         self.conf_loader.refresh_file(new_data_src)

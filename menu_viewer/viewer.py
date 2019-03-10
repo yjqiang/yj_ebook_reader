@@ -1,5 +1,5 @@
 import ui
-import console
+import dialogs
 
 
 class MenuViewer:
@@ -16,6 +16,9 @@ class MenuViewer:
         btn_show_index = view['btn_show_index']
         btn_show_index.action = self.show_index
         
+        btn_get_url = view['btn_get_url']
+        btn_get_url.action = self.get_url
+        
         view.right_btns_desc = 'return'
         self.view = view
     
@@ -30,3 +33,6 @@ class MenuViewer:
         self.controller.pop_1_view()
         self.controller.push_index_viewer()
         
+    def get_url(self, *args):
+        url = self.controller.get_url()
+        dialogs.share_url(url)
