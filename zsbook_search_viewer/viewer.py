@@ -27,7 +27,7 @@ class ZSBookSearchViewer:
         for i, values in enumerate(list_books):
             _, author, title = values
             list_msg.append(f'{i}.{author}：《{title}》')
-        str_msg = '\n'.join(list_msg)
+        str_msg = '\n'.join(reversed(list_msg))
         try:
             i = int(console.input_alert('请输入index的号码', str_msg, hide_cancel_button=True))
         except KeyboardInterrupt:
