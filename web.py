@@ -1,27 +1,25 @@
 import requests
+from diskcache import Cache
 
 
 session = requests.Session()
-caches = {}
+cache = Cache('cache_rsp')
+cache.expire()
 
 
 def get(url, headers=None, allow_cache=True):
     url = url.strip()
-    if url in caches:
+    if url in cache:
         # print('cached', url)
-        return caches[url]
+        return cache.get(url)
     while True:
         try:
             with session.get(url, headers=headers, timeout=4) as rsp:
-                if rsp.status_code != 200 and rsp.status_code != 500:
-                    pass
-                else:
-                    if allow_cache:
-                        caches[url] = rsp
+                if rsp.status_code == 200 or rsp.status_code == 500:
+                    if allow_cache or True:
+                        cache.set(url, rsp)
                     return rsp
         except Exception as e:
             print(e)
             pass
-            
-            
-        
+                    
