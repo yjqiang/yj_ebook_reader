@@ -1,5 +1,6 @@
 import ui
 import dialogs
+from requests.utils import requote_uri
 
 
 class MenuViewer:
@@ -35,4 +36,4 @@ class MenuViewer:
         
     def get_url(self, *args):
         url = self.controller.get_url()
-        dialogs.share_url(url)
+        dialogs.share_url(requote_uri(url))
