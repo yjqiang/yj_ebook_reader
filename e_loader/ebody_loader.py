@@ -42,8 +42,9 @@ class EBookBodyLoader(BodyLoader):
         return words, title, self.url
         
     def get_all_content(self, tag, start=False):
+        # start 是为了兼容，有网站数据正文分开两部分的……所以规则解析是到两部分的共同父节点(css selector只返回element)
         if not start and isinstance(tag, element.Tag):
-            if tag.name != 'br':
+            if tag.name != 'br':  # 目前只忽略br，虽然p也有,但是似乎会复杂化
                 return None
         if isinstance(tag, element.Comment):
             return None
