@@ -8,7 +8,15 @@
   # 防止有多级的url 下一页下一章混着
   [[websites.body.next]]
     name = 'a'
-    attrs = {rel = "next"}    
+    attrs = {rel = "next"}
+    
+[[websites]]
+  url = "www.ptwxz.com"
+  encoding = "gbk"
+  [[websites.body.content]]
+    css_selector = "head"
+  [[websites.body.next]]
+    css_selector = 'a:contains(下一)'
 
 [[websites]]
   url = "www.xbookcn.com"
