@@ -4,8 +4,7 @@
   # 判定标题的
   # 判定文章的(例如:br / b ....)
   [[websites.body.content]]
-    name = "p"
-    attrs = {class = false}
+    css_selector = "div[id=\"nr1\"] > p:not([class])"
   # 防止有多级的url 下一页下一章混着
   [[websites.body.next]]
     name = 'a'
@@ -46,11 +45,11 @@
     key = "href"
   
 [[websites]]
-  # 这货有func但是错误的mmp
   url = "www.piaotian.com"
+  encoding = "gbk"
   [[websites.body.content]]
-    name = "br"
-    attrs = {class = false}
+    name = "head"
+    attrs = {}
   [[websites.body.next]]
     name = 'a'
     string = "下一"
@@ -66,16 +65,6 @@
   [[websites.body.content]]
     name = "div"
     attrs = {}
-  [[websites.body.next]]
-    name = 'a'
-    string = "下一"
-    
-[[websites]]
-  url = "www.176novel.com"
-  encoding = "gbk"
-  [[websites.body.content]]
-    name = "div"
-    attrs = {id = "nr1"}
   [[websites.body.next]]
     name = 'a'
     string = "下一"
@@ -122,16 +111,6 @@
     string = "继续看"
     
 [[websites]]
-  url = "m.snwx8.com"
-  encoding = "gbk"
-  [[websites.body.content]]
-    name = "div"
-    attrs = {id = "nr1"}
-  [[websites.body.next]]
-    name = 'a'
-    string = "下一"
-    
-[[websites]]
   url = "www.xitxt.net"
   encoding = 'gbk'
   [[websites.body.content]]
@@ -158,19 +137,11 @@
     string = "下一章"
     
 [[websites]]
-  url = "m.176xsw.com"
-  [[websites.body.content]]
-    name = "div"
-    attrs = {class = "readcontent"}
-  [[websites.body.next]]
-    name = 'a'
-    string = "下一"  
-    
-[[websites]]
   url = "novel.zhwenpg.com"
   [[websites.body.content]]
     name = "span"
     attrs = {class = "content"}
+    css_selector = "span[class=\"content\"] > p"
   [[websites.body.next]]
     name = 'a'
     string = "下一"
@@ -178,7 +149,7 @@
 [[websites]]
   url = "www.quanben.io"
   [[websites.body.content]]
-    css_selector = "div[class=\"articlebody\"]"
+    css_selector = "div[class=\"articlebody\"] > p"
   [[websites.body.next]]
     css_selector = "a[rel=\"next\"]"
     

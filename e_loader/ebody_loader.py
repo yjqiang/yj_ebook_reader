@@ -40,6 +40,22 @@ class EBookBodyLoader(BodyLoader):
         title = zh_st.t2s(self.title)
         self.cur_offset += 1
         return words, title, self.url
+        
+    def get_all_content(self, tag, start=False):
+        if not start and isinstance(tag, element.Tag):
+            if tag.name != 'br':
+                return None
+        if isinstance(tag, element.Comment):
+            return None
+        if isinstance(tag, element.NavigableString):
+            text = tag.string.strip()
+            return [text] if text else None
+        results = []
+        for i in tag.children:
+            result = self.get_all_content(i)
+            if result:
+                results += result
+        return results
 
     def get_content(self):
         rules = self.rule.content
@@ -49,17 +65,8 @@ class EBookBodyLoader(BodyLoader):
             labels += rule.findall_raw(self.text, self.soups)
         words = []
         for i in labels:
-            for row in i.childGenerator():
-                if isinstance(row, element.Comment):
-                    continue
-                para = row.string
-
-                if para is not None:
-                    para = para.strip()
-                    if para:
-                        if para[0] != '　':
-                            para = '　　' + para
-                        words.append(para)
+            words += self.get_all_content(i, start=True)
+        words = ['　　' + i for i in words]
         return words
         
         
