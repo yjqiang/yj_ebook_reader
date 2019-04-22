@@ -197,7 +197,17 @@
     key = "src"
   [[websites.body.next]]
     css_selector = "a[id=\"next\"]"
-    key = "href"  
+    key = "href"
+
+[[websites]]
+  url = "kkpmh.com"
+  headers = {cookie = ""}
+  [[websites.body.content]]
+    css_selector = "div[class=\"cartoon\"] > img"
+    key = "data-lazy-src"
+  [[websites.body.next]]
+    css_selector = "a[rel=\"next\"][href!=\"\"]"
+    key = "href"
 
 [[websites]]
   url = "m.k886.net"
