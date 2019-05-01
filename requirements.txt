@@ -2,3 +2,4 @@ beautifulsoup4
 toml
 soupsieve
 diskcache
+requests
