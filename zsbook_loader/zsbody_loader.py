@@ -47,9 +47,9 @@ class ZSBodyLoader:
         # self.title = chapter['title']
         words = []
         for para in chapter['body'].split('\n'):
+            para = para.strip()
             if para:
-                if para[0] != '　':
-                    para = '　　' + para
+                para = '　　' + para
                 words.append(para)
         return words
         
